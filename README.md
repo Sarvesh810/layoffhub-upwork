@@ -15,9 +15,9 @@ Visit [LayoffHub.ai](https://layoffhub.ai) to start exploring insider trading da
 
 ## 🛠️ Technologies Used
 
-- **Frontend**: React.js
-- **Backend**: Django-Python
-- **Database**: PostgreSQL
-- **Data Sources**: Financial market APIs and insider trading databases
+- **Frontend**: React.js, Tailwind CSS
+- **Backend**: Django, Python, Docker
+- **Database**: PostgreSQL, Docker
+- **Data Sources**: Financial market APIs and insider trading databases, SEC Edgar API
 
 Stay informed. Stay ahead. Discover the stories behind the numbers with **LayoffHub.ai**.
