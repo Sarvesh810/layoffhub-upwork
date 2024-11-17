@@ -8,6 +8,7 @@ import { FaEye } from "react-icons/fa";
 import AnswersGiven from "./AnswersGiven";
 import GiveAnswer from "./GiveAnswer";
 import Loader from "./Loader";
+import { API_BASE_URL } from "../config";
 
 const CompanyComp = ({ companyId, activesort, showModal }) => {
   const [pollStates, setPollStates] = useState([]);
@@ -20,7 +21,7 @@ const CompanyComp = ({ companyId, activesort, showModal }) => {
   const [msg, setMsg] = useState("");
 
   const getQuestions = async () => {
-    const url = `https://api.layoffhub.ai/api/asked_questions/`;
+    const url = `${API_BASE_URL}/api/asked_questions/`;
 
     try {
       const response = await axios.get(url, {
@@ -28,40 +29,39 @@ const CompanyComp = ({ companyId, activesort, showModal }) => {
           "Content-Type": "application/json",
         },
       });
-      const filteredData = response.data.filter(item =>
-        item.companies.some(company => company.id === companyId)
-      );  
+      const filteredData = response.data.filter((item) =>
+        item.companies.some((company) => company.id === companyId)
+      );
       if (activesort === "new") {
-        
         const fetchedQuestions = filteredData;
         const sortedQuestions = fetchedQuestions.reverse();
-        setData(sortedQuestions);    
-      }
-      else if(activesort === "trending"){
+        setData(sortedQuestions);
+      } else if (activesort === "trending") {
         const sortedQuestions = filteredData.sort((a, b) => b.votes - a.votes);
-        console.log(sortedQuestions)
-  
+        console.log(sortedQuestions);
+
+        setData(filteredData || []);
+      } else {
+        const sortedQuestions = filteredData.sort(
+          (a, b) => b.view_count - a.view_count
+        );
+        console.log(sortedQuestions);
         setData(filteredData || []);
       }
-      else {
-        const sortedQuestions = filteredData.sort((a, b) => b.view_count - a.view_count);
-        console.log(sortedQuestions)
-        setData(filteredData || []);
-      }
-     
+
       setPollStates(new Array(filteredData.length).fill(false));
       setPollStates1(new Array(filteredData.length).fill(false));
     } catch (error) {
       console.error("Error fetching content data:", error);
     } finally {
       setLoading(false);
-      setSortLoading(false)
+      setSortLoading(false);
     }
   };
 
   useEffect(() => {
     getQuestions();
-  }, [companyId,activesort, showModal]);
+  }, [companyId, activesort, showModal]);
 
   const toggleDropdown = (index) => {
     setPollStates((prevStates) =>
@@ -83,67 +83,71 @@ const CompanyComp = ({ companyId, activesort, showModal }) => {
     setVisibleCount((prevCount) => prevCount + 6);
   };
 
-
-
-
   const handleTagClick = (tagName) => {
     console.log(`Tag clicked: ${tagName}`);
   };
   const upvoteQuestion = async (questionId, index) => {
     if (!token) {
-      alert('Please log in to upvote');
+      alert("Please log in to upvote");
       return;
     }
 
-    const url = `https://api.layoffhub.ai/api/upvote_question/${questionId}/`;
+    const url = `${API_BASE_URL}/api/upvote_question/${questionId}/`;
 
     try {
-      await axios.post(url, {}, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-      });
+      await axios.post(
+        url,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-      setData(prevData =>
+      setData((prevData) =>
         prevData.map((item, i) =>
           i === index ? { ...item, votes: item.votes + 1 } : item
         )
       );
     } catch (error) {
-      console.error('Error upvoting question:', error);
+      console.error("Error upvoting question:", error);
       alert("You can't upvote again");
     }
   };
 
   const downvoteQuestion = async (questionId, index) => {
     if (!token) {
-      alert('Please log in to downvote');
+      alert("Please log in to downvote");
       return;
     }
 
-    const url = `https://api.layoffhub.ai/api/downvote_question/${questionId}/`;
+    const url = `${API_BASE_URL}/api/downvote_question/${questionId}/`;
 
     try {
-      await axios.post(url, {}, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-      });
+      await axios.post(
+        url,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-      setData(prevData =>
+      setData((prevData) =>
         prevData.map((item, i) =>
           i === index ? { ...item, votes: item.votes - 1 } : item
         )
       );
     } catch (error) {
-      console.error('Error downvoting question:', error);
+      console.error("Error downvoting question:", error);
       alert("You can't downvote again");
     }
   };
 
-  
   return (
     <div className="mx-3 pb-5 ">
       {loading || sortLoading ? (
@@ -157,35 +161,49 @@ const CompanyComp = ({ companyId, activesort, showModal }) => {
                   <div className="card-body">
                     <div className="d-flex justify-content-between align-items-center">
                       <div className="d-flex align-items-center ">
-                      
                         <div>
                           <p className="card-title fw-bold">
                             {item.author_username || "Anonymous"}
                           </p>
                           <p className="card-text">
-                          <span className='text-primary'>Posted At </span> {new Date(item.date_posted).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) || 'July 17, 2004'}
+                            <span className="text-primary">Posted At </span>{" "}
+                            {new Date(item.date_posted).toLocaleDateString(
+                              "en-US",
+                              { year: "numeric", month: "long", day: "numeric" }
+                            ) || "July 17, 2004"}
                           </p>
                         </div>
                       </div>
                     </div>
                     {item.companies.length > 0 && (
-                      <div className='mb-2' style={{ borderBottom: '1px solid grey' }}>
-                        <div className='jaba'>
-                          <div className='row'>
-                            <div className='col-3 hnn'>
-                              <img 
-                                src={item.companies.map(company => company.picture).join(', ')} 
-                                className="img-fluid mx-4 mt-1 mb-1 iamge1" 
-                                alt={item.companies.map(company => company.name).join(', ')}
+                      <div
+                        className="mb-2"
+                        style={{ borderBottom: "1px solid grey" }}
+                      >
+                        <div className="jaba">
+                          <div className="row">
+                            <div className="col-3 hnn">
+                              <img
+                                src={item.companies
+                                  .map((company) => company.picture)
+                                  .join(", ")}
+                                className="img-fluid mx-4 mt-1 mb-1 iamge1"
+                                alt={item.companies
+                                  .map((company) => company.name)
+                                  .join(", ")}
                               />
                             </div>
-                            <div className='col-8 mx-4 mt-2'>
-                              <span style={{ fontSize: 'small' }}> 
-                                {item.companies.map(company => company.name).join(', ')}
+                            <div className="col-8 mx-4 mt-2">
+                              <span style={{ fontSize: "small" }}>
+                                {item.companies
+                                  .map((company) => company.name)
+                                  .join(", ")}
                               </span>
                               <div>
-                                <span style={{ fontSize: 'small' }}> 
-                                  {item.companies.map(company => company.sector).join(', ')}
+                                <span style={{ fontSize: "small" }}>
+                                  {item.companies
+                                    .map((company) => company.sector)
+                                    .join(", ")}
                                 </span>
                               </div>
                             </div>
@@ -193,10 +211,10 @@ const CompanyComp = ({ companyId, activesort, showModal }) => {
                         </div>
                       </div>
                     )}
-                    
+
                     <p className="card-text fw-bold">{item.title}</p>
                     <p className="card-text">{item.caption}</p>
-                    
+
                     <li className="list-group-item">
                       <div className="d-flex flex-wrap">
                         {item.tags &&
@@ -232,24 +250,21 @@ const CompanyComp = ({ companyId, activesort, showModal }) => {
                         </p>
                       </div>
                       <div className="d-flex flex-row">
-                          <button
-                            className='btn border-0'
-                            onClick={() => upvoteQuestion(item.id, index)}
-                            
-                          >
-                             <BiSolidUpArrow size={20} color="green" />
-                          </button>
-                          <span className='mt-2'>{item.votes} </span>
-                          <button
-                            className='btn border-0'
-                            onClick={() => downvoteQuestion(item.id, index)}
-                            
-                          >
-                            <BiSolidDownArrow size={20} color="red" />
-                          </button>
-                        </div>
+                        <button
+                          className="btn border-0"
+                          onClick={() => upvoteQuestion(item.id, index)}
+                        >
+                          <BiSolidUpArrow size={20} color="green" />
+                        </button>
+                        <span className="mt-2">{item.votes} </span>
+                        <button
+                          className="btn border-0"
+                          onClick={() => downvoteQuestion(item.id, index)}
+                        >
+                          <BiSolidDownArrow size={20} color="red" />
+                        </button>
+                      </div>
 
-                     
                       <div className="polls-container pol">
                         {token ? (
                           <div
@@ -295,7 +310,7 @@ const CompanyComp = ({ companyId, activesort, showModal }) => {
                       )}
                     </div>
                   </div>
-                  <hr/>
+                  <hr />
                 </div>
               </div>
             ))}
@@ -317,4 +332,3 @@ const CompanyComp = ({ companyId, activesort, showModal }) => {
 };
 
 export default CompanyComp;
-

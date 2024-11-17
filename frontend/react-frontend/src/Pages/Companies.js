@@ -45,6 +45,7 @@ import {
   SubmitButton,
 } from "./StyledCompaniesProfile";
 import { FaSearch } from "react-icons/fa";
+import { API_BASE_URL } from "../config";
 
 const Companies = () => {
   const [companies, setCompanies] = useState([]);
@@ -67,7 +68,7 @@ const Companies = () => {
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
-        const response = await axios.get("https://api.layoffhub.ai/api/top-companies/");
+        const response = await axios.get(`${API_BASE_URL}/api/top-companies/`);
         setCompanies(response.data);
       } catch (error) {
         console.error("Error fetching company data:", error);
@@ -118,7 +119,11 @@ const Companies = () => {
       visiblePages.push(i);
     }
   } else {
-    for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
+    for (
+      let i = Math.max(1, currentPage - 2);
+      i <= Math.min(totalPages, currentPage + 2);
+      i++
+    ) {
       visiblePages.push(i);
     }
     if (currentPage < totalPages - 2) {
@@ -141,38 +146,123 @@ const Companies = () => {
     };
 
     try {
-      await axios.post("https://api.layoffhub.ai/api/ask_a_question/", payload, {
+      await axios.post(`${API_BASE_URL}/api/ask_a_question/`, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("Question submitted successfully!");
       setShowModal(false);
       window.location.reload();
     } catch (error) {
-      console.error("Error submitting question:", error.response ? error.response.data : error.message);
+      console.error(
+        "Error submitting question:",
+        error.response ? error.response.data : error.message
+      );
       alert("Failed to submit question.");
     }
   };
 
-  const usertags = ["Technology Enthusiasts", "Software Developers", "Hardware Geeks", "Mobile Technology", "Web Development",
-    "AI & Machine Learning", "Cybersecurity", "Data Science", "Cloud Computing", "Blockchain Enthusiasts",
-    "IoT Innovators", "Game Development", "Networking Experts", "Tech News", "Startups & Entrepreneurs",
-    "Open Source Projects", "Tech Events", "Career Advice in Tech", "Tech Education", "Tech Support",
-    "Freelancers", "UI/UX Design", "DevOps", "Programming Languages", "IT Professionals",
-    "Robotics", "Virtual Reality", "Augmented Reality", "Tech Podcasts", "Coding Challenges",
-    "Tech Books", "Women in Tech", "Ethical Hacking", "IT Certifications", "Tech Reviews",
-    "Server Administration", "Software Testing", "Mobile Apps Development", "Tech Innovations",
-    "E-commerce Development", "Tech Gadgets", "Artificial Intelligence", "Machine Learning", "Big Data",
-    "Tech Jobs", "Tech Trends", "Project Management", "Tech Tutorials", "Software Architecture",
-    "Tech Startups", "Tech Investment", "Digital Marketing", "SEO & SEM", "Content Management",
-    "Cloud Services", "SaaS", "PaaS", "IaaS", "Cyber Threats", "IT Governance", "Data Privacy",
-    "IT Law & Compliance", "Tech Partnerships", "Innovation Labs", "IT Infrastructure",
-    "Agile Methodologies", "Scrum Masters", "Product Management", "Technical Writing", "Quality Assurance",
-    "IT Outsourcing", "Tech Networking", "IT Strategy", "Business Intelligence", "Data Warehousing",
-    "IT Consulting", "Mobile Gaming", "Tech Health", "IT Ethics", "Green Technology", "Tech Incubators",
-    "Tech Crowdfunding", "Digital Transformation", "Smart Cities", "Wearable Technology", "Tech Culture",
-    "Remote Work", "Tech Ecosystems", "IT Service Management", "Disaster Recovery", "Tech Policy",
-    "IT Procurement", "Enterprise Architecture", "Tech Conferences", "Tech Communities", "IT Leadership",
-    "Tech Mentorship", "Tech Volunteers", "Open Innovation", "Smart Homes"];
+  const usertags = [
+    "Technology Enthusiasts",
+    "Software Developers",
+    "Hardware Geeks",
+    "Mobile Technology",
+    "Web Development",
+    "AI & Machine Learning",
+    "Cybersecurity",
+    "Data Science",
+    "Cloud Computing",
+    "Blockchain Enthusiasts",
+    "IoT Innovators",
+    "Game Development",
+    "Networking Experts",
+    "Tech News",
+    "Startups & Entrepreneurs",
+    "Open Source Projects",
+    "Tech Events",
+    "Career Advice in Tech",
+    "Tech Education",
+    "Tech Support",
+    "Freelancers",
+    "UI/UX Design",
+    "DevOps",
+    "Programming Languages",
+    "IT Professionals",
+    "Robotics",
+    "Virtual Reality",
+    "Augmented Reality",
+    "Tech Podcasts",
+    "Coding Challenges",
+    "Tech Books",
+    "Women in Tech",
+    "Ethical Hacking",
+    "IT Certifications",
+    "Tech Reviews",
+    "Server Administration",
+    "Software Testing",
+    "Mobile Apps Development",
+    "Tech Innovations",
+    "E-commerce Development",
+    "Tech Gadgets",
+    "Artificial Intelligence",
+    "Machine Learning",
+    "Big Data",
+    "Tech Jobs",
+    "Tech Trends",
+    "Project Management",
+    "Tech Tutorials",
+    "Software Architecture",
+    "Tech Startups",
+    "Tech Investment",
+    "Digital Marketing",
+    "SEO & SEM",
+    "Content Management",
+    "Cloud Services",
+    "SaaS",
+    "PaaS",
+    "IaaS",
+    "Cyber Threats",
+    "IT Governance",
+    "Data Privacy",
+    "IT Law & Compliance",
+    "Tech Partnerships",
+    "Innovation Labs",
+    "IT Infrastructure",
+    "Agile Methodologies",
+    "Scrum Masters",
+    "Product Management",
+    "Technical Writing",
+    "Quality Assurance",
+    "IT Outsourcing",
+    "Tech Networking",
+    "IT Strategy",
+    "Business Intelligence",
+    "Data Warehousing",
+    "IT Consulting",
+    "Mobile Gaming",
+    "Tech Health",
+    "IT Ethics",
+    "Green Technology",
+    "Tech Incubators",
+    "Tech Crowdfunding",
+    "Digital Transformation",
+    "Smart Cities",
+    "Wearable Technology",
+    "Tech Culture",
+    "Remote Work",
+    "Tech Ecosystems",
+    "IT Service Management",
+    "Disaster Recovery",
+    "Tech Policy",
+    "IT Procurement",
+    "Enterprise Architecture",
+    "Tech Conferences",
+    "Tech Communities",
+    "IT Leadership",
+    "Tech Mentorship",
+    "Tech Volunteers",
+    "Open Innovation",
+    "Smart Homes",
+  ];
 
   const handleSubmit = () => {
     ask_a_question();
@@ -204,12 +294,12 @@ const Companies = () => {
   useEffect(() => {
     const fetchCompanyName = async () => {
       try {
-        const response = await axios.get('https://api.layoffhub.ai/api/companies', {
-          headers: { Authorization: `Bearer ${token}` }
+        const response = await axios.get(`${API_BASE_URL}/api/companies`, {
+          headers: { Authorization: `Bearer ${token}` },
         });
         setCompanyName(response.data);
       } catch (error) {
-        console.error('Error fetching company names:', error);
+        console.error("Error fetching company names:", error);
       }
     };
     fetchCompanyName();
@@ -228,13 +318,17 @@ const Companies = () => {
       <MainContainer1>
         <ContantHolder>
           <ButtonContainer>
-            <Button onClick={handleStartDiscussionClick}>START A DISCUSSION</Button>
+            <Button onClick={handleStartDiscussionClick}>
+              START A DISCUSSION
+            </Button>
           </ButtonContainer>
           {showModal && (
             <AskQuestionModal1>
               <AskQuestionModal>
                 <ModalHeader>
-                  <CloseButton onClick={() => setShowModal(false)}>X</CloseButton>
+                  <CloseButton onClick={() => setShowModal(false)}>
+                    X
+                  </CloseButton>
                   <h2>Start a Discussion</h2>
                 </ModalHeader>
                 <ModalContent>
@@ -256,7 +350,10 @@ const Companies = () => {
                                 checked={anonymous}
                                 onChange={() => setAnonymous(!anonymous)}
                               />
-                              <label className="form-check-label" htmlFor="anonymousCheck">
+                              <label
+                                className="form-check-label"
+                                htmlFor="anonymousCheck"
+                              >
                                 Post anonymously
                               </label>
                             </div>
@@ -277,18 +374,35 @@ const Companies = () => {
                           </div>
                           <div className="">
                             <label className="fw-bold ">Company Name</label>
-                            <select className="form-control" value={companyid} onChange={handleCompanyChange}>
-                              <option value="" hidden>Select a company...</option>
-                              {companyName.length > 0 ? companyName.map((company, index) => (
-                                <option key={index} value={company.id}>{company.name}</option>
-                              )) : <option disabled>Loading...</option>}
+                            <select
+                              className="form-control"
+                              value={companyid}
+                              onChange={handleCompanyChange}
+                            >
+                              <option value="" hidden>
+                                Select a company...
+                              </option>
+                              {companyName.length > 0 ? (
+                                companyName.map((company, index) => (
+                                  <option key={index} value={company.id}>
+                                    {company.name}
+                                  </option>
+                                ))
+                              ) : (
+                                <option disabled>Loading...</option>
+                              )}
                             </select>
                           </div>
                           <div className="pt-2">
                             <div className="">
                               <label className="fw-bold ">Tags</label>
-                              <select className="form-control" onChange={handleSelect}>
-                                <option value="" hidden>Select tags...</option>
+                              <select
+                                className="form-control"
+                                onChange={handleSelect}
+                              >
+                                <option value="" hidden>
+                                  Select tags...
+                                </option>
                                 {usertags.map((tag, index) => (
                                   <option key={index} value={tag}>
                                     {tag}
@@ -297,7 +411,10 @@ const Companies = () => {
                               </select>
                               <div className="selected-tags mt-2">
                                 {selectedTags.map((tag, index) => (
-                                  <span key={index} className="badge bg-secondary me-2">
+                                  <span
+                                    key={index}
+                                    className="badge bg-secondary me-2"
+                                  >
                                     {tag}
                                     <button
                                       type="button"
@@ -312,7 +429,7 @@ const Companies = () => {
                           </div>
                           <div className="pt-4">
                             <div className="pb-3">
-                          {/*     <div className="toolbar d-flex  flex-wrap mb-2">
+                              {/*     <div className="toolbar d-flex  flex-wrap mb-2">
                                 <div className="btn-group me-2">
                                   <button type="button" className="btn" onClick={() => applyFormatting("bold")}>
                                     <FaBold />
@@ -396,10 +513,12 @@ const Companies = () => {
                 <CompnayDetail key={company.id}>
                   <NumberContainer
                     style={{
-                      borderRadius: `${
-                        isFirstItem ? "8px 0px" : "0"
-                      } ${isLastItem ? "0px 0px 8px" : "0"}`,
-                      backgroundColor: applyBackgroundColor ? "#1376f89f" : "#1376f8",
+                      borderRadius: `${isFirstItem ? "8px 0px" : "0"} ${
+                        isLastItem ? "0px 0px 8px" : "0"
+                      }`,
+                      backgroundColor: applyBackgroundColor
+                        ? "#1376f89f"
+                        : "#1376f8",
                     }}
                   >
                     {(currentPage - 1) * companiesPerPage + index + 1}
@@ -413,14 +532,20 @@ const Companies = () => {
                       </NameHolder>
                     </CompanyData>
                     <DetailButton onClick={() => navigate(`/${company.name}`)}>
-                    View Company
+                      View Company
                     </DetailButton>
                   </ContextContainer>
                 </CompnayDetail>
               );
             })}
           </div>
-          <div style={{ display: "flex", justifyContent: "end", marginTop: "20px" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "end",
+              marginTop: "20px",
+            }}
+          >
             <div className="p-2 jaba2">
               <button onClick={goToPreviousPage} disabled={currentPage === 1}>
                 <RiArrowDropLeftLine size={30} />
@@ -444,7 +569,11 @@ const Companies = () => {
                   {page}
                 </button>
               ))}
-              <button onClick={goToNextPage} disabled={currentPage === totalPages} className="mx-2">
+              <button
+                onClick={goToNextPage}
+                disabled={currentPage === totalPages}
+                className="mx-2"
+              >
                 <RiArrowDropRightLine size={30} />
               </button>
             </div>

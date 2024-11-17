@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { API_BASE_URL } from "../config";
 
 const Container = styled.div`
   padding: 20px;
@@ -156,7 +157,7 @@ const InsiderTrades = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const apiUrl = `https://api.layoffhub.ai/api/display-data/${symbol}/`;
+        const apiUrl = `${API_BASE_URL}/api/display-data/${symbol}/`;
         const response = await axios.get(apiUrl);
 
         const { data_last_3_months } = response.data[0] || {};

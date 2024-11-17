@@ -14,6 +14,7 @@ import {
 } from "./StyledPassword";
 import axios from "axios";
 import reset from "../Images/logo-nobackground-1000.png";
+import { API_BASE_URL } from "../config";
 
 const Password = () => {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ const Password = () => {
 
     try {
       const response = await axios.post(
-        `https://api.layoffhub.ai/api/password-reset-confirm/${uidb64}/${token}/`,
+        `${API_BASE_URL}/api/password-reset-confirm/${uidb64}/${token}/`,
         {
           new_password: password,
           confirm_new_password: confirmPassword,

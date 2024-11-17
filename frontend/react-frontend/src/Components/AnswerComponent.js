@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaRegCommentAlt } from "react-icons/fa";
+import { API_BASE_URL } from "../config";
 
 const AnswerComponent = ({ answerId }) => {
   const [showCommentBox, setShowCommentBox] = useState(false);
@@ -30,7 +31,7 @@ const AnswerComponent = ({ answerId }) => {
       return;
     }
 
-    const url = `https://api.layoffhub.ai/api/answer_an_answer/${answerId}/`;
+    const url = `${API_BASE_URL}/api/answer_an_answer/${answerId}/`;
 
     try {
       const response = await axios.post(
@@ -54,7 +55,7 @@ const AnswerComponent = ({ answerId }) => {
   };
 
   const getComments = async () => {
-    const url = `https://api.layoffhub.ai/api/answer_an_answer/${answerId}/`;
+    const url = `${API_BASE_URL}/api/answer_an_answer/${answerId}/`;
 
     try {
       const response = await axios.get(url, {
@@ -63,7 +64,7 @@ const AnswerComponent = ({ answerId }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      const submitreply = response.data.reverse() || []
+      const submitreply = response.data.reverse() || [];
 
       setComments(submitreply);
     } catch (error) {
@@ -113,16 +114,21 @@ const AnswerComponent = ({ answerId }) => {
               <div key={comment.id} className="p-2 rounded">
                 <div className="p-2 ">
                   <div className="d-flex">
-                    <h6>{comment.user ? comment.user.username : "Anonymous"}</h6>
+                    <h6>
+                      {comment.user ? comment.user.username : "Anonymous"}
+                    </h6>
                   </div>
                   <div className="d-flex">
                     <span className="text-muted" style={{ fontSize: "small" }}>
                       <span className="text-primary">Posted At </span>
-                      {new Date(comment.date_posted).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      }) || "July 17, 2004"}
+                      {new Date(comment.date_posted).toLocaleDateString(
+                        "en-US",
+                        {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        }
+                      ) || "July 17, 2004"}
                     </span>
                   </div>
                   <p className="mb-1"></p>

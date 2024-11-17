@@ -4,6 +4,7 @@ import img1 from "../Images/logo-nobackground-1000.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
+import { API_BASE_URL } from "../config";
 
 const Signup = () => {
   const [firstName, setFirstName] = useState("");
@@ -15,7 +16,7 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-const [reffer, setReffer] = useState("");
+  const [reffer, setReffer] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -56,15 +57,11 @@ const [reffer, setReffer] = useState("");
     };
 
     try {
-      const result = await axios.post(
-        "https://api.layoffhub.ai/api/signup/",
-        user,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const result = await axios.post(`${API_BASE_URL}/api/signup/`, user, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       console.log("User signed up successfully:", result.data);
       navigate("/signin");
     } catch (error) {
@@ -239,7 +236,6 @@ const [reffer, setReffer] = useState("");
                     Referral Code
                   </label>
                   <input
-                    
                     id="referral_url"
                     name="referral_url"
                     className="form-control"

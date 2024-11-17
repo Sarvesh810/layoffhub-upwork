@@ -18,6 +18,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import reset from "../Images/logo-nobackground-1000.png";
+import { API_BASE_URL } from "../config";
 
 const Forget = () => {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ const Forget = () => {
 
       console.log("Submitting user:", user);
       const response = await axios.post(
-        "https://api.layoffhub.ai/api/password-reset/",
+        `${API_BASE_URL}/api/password-reset/`,
         user
       );
       console.log("Api-response", response);

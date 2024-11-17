@@ -56,7 +56,7 @@ import InsiderTrades from "../Components/Insider";
 import Similar from "./SimilarCompany";
 import Footer from "../Components/Footer";
 import MostCommented from "../Components/MostCommented";
-
+import { API_BASE_URL } from "../config";
 
 const CompaniesProfile = () => {
   const { name } = useParams();
@@ -74,16 +74,16 @@ const CompaniesProfile = () => {
   useEffect(() => {
     if (name) {
       axios
-        .get(`https://api.layoffhub.ai/api/company_profile/${name}`)
+        .get(`${API_BASE_URL}/api/company_profile/${name}`)
         .then((response) => {
           const data = response.data;
           setCompanyData(data);
           console.log("Data fetched: ", data);
-        
+
           const fetchedId = data?.id; // Assuming the ID is present in the response
           if (fetchedId) {
             setCompanyId(fetchedId);
-            setCompanyid(fetchedId ) // Store the ID in the state
+            setCompanyid(fetchedId); // Store the ID in the state
           }
           const fetchedSymbol = response.data?.symbol;
           const fetchedsector = response.data?.sector;
@@ -102,7 +102,7 @@ const CompaniesProfile = () => {
   useEffect(() => {
     if (symbol) {
       axios
-        .get(`https://api.layoffhub.ai/api/fetch-data/${symbol}/`)
+        .get(`${API_BASE_URL}/api/fetch-data/${symbol}/`)
         .then((response) => {
           console.log("Data posted successfully:", response.data);
         })
@@ -112,28 +112,23 @@ const CompaniesProfile = () => {
     }
   }, [symbol]);
 
+  useEffect(() => {
+    if (activeTab === "Discussion") {
+      axios.get(`${API_BASE_URL}/api/asked_questions/`).then((response) => {
+        // Assuming response.data is an array of questions
+        const fetchedQuestions = response.data || [];
 
-    useEffect(() => {
-      if (activeTab === "Discussion") {
-        axios.get("https://api.layoffhub.ai/api/asked_questions/")
-          .then((response) => {
-            // Assuming response.data is an array of questions
-            const fetchedQuestions = response.data || [];
-  
-            // Reverse the order of questions so the newest ones come first
-            const sortedQuestions = fetchedQuestions.reverse();
-  
-            // Update the state with the sorted questions
-            setDiscussionData(sortedQuestions);
-          })
-          
-    } 
-    else if (activeTab === "Insider Trading Dashboard") {
+        // Reverse the order of questions so the newest ones come first
+        const sortedQuestions = fetchedQuestions.reverse();
+
+        // Update the state with the sorted questions
+        setDiscussionData(sortedQuestions);
+      });
+    } else if (activeTab === "Insider Trading Dashboard") {
       axios.get("https://api.example.com/insider-trading").then((response) => {
         setInsiderTradingData(response.data);
       });
-      
-    }else if (activeTab === "Stock Data") {
+    } else if (activeTab === "Stock Data") {
       axios.get("https://api.example.com/stock-data").then((response) => {
         setStockData(response.data);
       });
@@ -141,46 +136,39 @@ const CompaniesProfile = () => {
   }, [activeTab]);
   useEffect(() => {
     if (activesort === "Discussion") {
-      axios
-        .get("https://api.layoffhub.ai/api/asked_questions/")
-        .then((response) => {
-          setDiscussionData(response.data);
-          console.log(response.data);
-        });
+      axios.get(`${API_BASE_URL}/api/asked_questions/`).then((response) => {
+        setDiscussionData(response.data);
+        console.log(response.data);
+      });
     } else if (activesort === "most") {
-      axios
-      .get("https://api.layoffhub.ai/api/asked_questions/")
-      .then((response) => {
-         const fetchedQuestions = response.data || [];
-          
+      axios.get(`${API_BASE_URL}/api/asked_questions/`).then((response) => {
+        const fetchedQuestions = response.data || [];
+
         // Sort the data by view_count in descending order
-        const sortedQuestions = fetchedQuestions.sort((a, b) => b.view_count - a.view_count);
+        const sortedQuestions = fetchedQuestions.sort(
+          (a, b) => b.view_count - a.view_count
+        );
 
         setDiscussionData(sortedQuestions);
-        
       });
     } else if (activesort === "trending") {
-      axios
-      .get("https://api.layoffhub.ai/api/asked_questions/")
-      .then((response) => {
-         const fetchedQuestions = response.data || [];
-          
+      axios.get(`${API_BASE_URL}/api/asked_questions/`).then((response) => {
+        const fetchedQuestions = response.data || [];
+
         // Sort the data by view_count in descending order
-        const sortedQuestions = fetchedQuestions.sort((a, b) => b.votes - a.votes);
+        const sortedQuestions = fetchedQuestions.sort(
+          (a, b) => b.votes - a.votes
+        );
 
         setDiscussionData(sortedQuestions);
-        
       });
     }
   }, [activesort]);
 
-
   useEffect(() => {
     const fetchTrendTags = async () => {
       try {
-        const response = await axios.get(
-          "https://api.layoffhub.ai/api/trending_tags/"
-        );
+        const response = await axios.get(`${API_BASE_URL}/api/trending_tags/`);
         setTrendTags(response.data || []);
       } catch (error) {
         console.error("Error fetching trending tags:", error);
@@ -194,7 +182,7 @@ const CompaniesProfile = () => {
     const fetchSectorName = async () => {
       try {
         const response = await axios.get(
-          "https://api.layoffhub.ai/api/industries_sectors/"
+          `${API_BASE_URL}/api/industries_sectors/`
         );
         setSectorname(response.data);
       } catch (error) {
@@ -207,9 +195,7 @@ const CompaniesProfile = () => {
   useEffect(() => {
     const fetchQuestion = async () => {
       try {
-        const response = await axios.get(
-          "https://api.layoffhub.ai/api/companies"
-        );
+        const response = await axios.get(`${API_BASE_URL}/api/companies`);
         setCompanyName(response.data);
       } catch (error) {
         console.error("Error fetching company names:", error);
@@ -374,13 +360,9 @@ const CompaniesProfile = () => {
     };
 
     try {
-      await axios.post(
-        "https://api.layoffhub.ai/api/ask_a_question/",
-        payload,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await axios.post(`${API_BASE_URL}/api/ask_a_question/`, payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       alert("Question submitted successfully!");
       setShowModal(false);
     } catch (error) {
@@ -395,9 +377,7 @@ const CompaniesProfile = () => {
   useEffect(() => {
     const fetchCompanyName = async () => {
       try {
-        const response = await axios.get(
-          "https://api.layoffhub.ai/api/companies"
-        );
+        const response = await axios.get(`${API_BASE_URL}/api/companies`);
         setCompanyName(response.data);
       } catch (error) {
         console.error("Error fetching company names:", error);
@@ -416,9 +396,9 @@ const CompaniesProfile = () => {
     }
   };
   const handleButtonClick = () => {
-  setShowModal(false);
-  handleStartDiscussionClick();
-};
+    setShowModal(false);
+    handleStartDiscussionClick();
+  };
 
   return (
     <>
@@ -427,7 +407,7 @@ const CompaniesProfile = () => {
         <Data>
           {companyData && (
             <CompanyProfile>
-             {companyData.picture ? (
+              {companyData.picture ? (
                 <CompanyLogo src={companyData.picture} alt={companyData.name} />
               ) : (
                 <p className="mx-3">No Image Available</p> // Fallback if no picture
@@ -495,15 +475,17 @@ const CompaniesProfile = () => {
                 </FiltersContainer>
                 <AskQuestionButton onClick={handleButtonClick}>
                   Start Discussion
-                </AskQuestionButton> 
+                </AskQuestionButton>
               </ButtonHolder>
-              <CompanyComp companyId={companyId} activesort={activesort} showModal={showModal}/>
-          
+              <CompanyComp
+                companyId={companyId}
+                activesort={activesort}
+                showModal={showModal}
+              />
             </div>
-          
           )}
           <div className="jabajaba">
-          {activeTab === "Insider Trading Dashboard" && <InsiderTrades />}
+            {activeTab === "Insider Trading Dashboard" && <InsiderTrades />}
           </div>
           {activeTab === "Stock Data" && (
             <div>
@@ -516,127 +498,115 @@ const CompaniesProfile = () => {
             </div>
           )}
 
-          {activeTab === "Similar Discussions" && (
-           <Similar/>
-          )}
+          {activeTab === "Similar Discussions" && <Similar />}
         </DiscussionList>
 
         {showModal && (
           <AskQuestionModal1>
-          <AskQuestionModal>
-            <ModalHeader>
-              <CloseButton onClick={() => setShowModal(false)}>X</CloseButton>
-              <h2 >Start a Discussion</h2>
-            </ModalHeader>
-            <ModalContent>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleSubmit();
-                }}
-              >
-                <div className="row">
-                  <div className="">
-                    <div className="content-box  mb-5">
+            <AskQuestionModal>
+              <ModalHeader>
+                <CloseButton onClick={() => setShowModal(false)}>X</CloseButton>
+                <h2>Start a Discussion</h2>
+              </ModalHeader>
+              <ModalContent>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSubmit();
+                  }}
+                >
+                  <div className="row">
                     <div className="">
-                        <div className="form-check">
-                          <input
-                            type="checkbox"
-                            className="form-check-input"
-                            id="anonymousCheck"
-                            checked={anonymous}
-                            value={true}
-                            onChange={(e) => setAnonymous(e.target.value)}
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="anonymousCheck"
-                          >
-                            Post anonymously
-                          </label>
-                        </div>
-                      </div>
-                      <div className="">
+                      <div className="content-box  mb-5">
                         <div className="">
-                          <label className="fw-bold pb-2">Title</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                          />
-                         
+                          <div className="form-check">
+                            <input
+                              type="checkbox"
+                              className="form-check-input"
+                              id="anonymousCheck"
+                              checked={anonymous}
+                              value={true}
+                              onChange={(e) => setAnonymous(e.target.value)}
+                            />
+                            <label
+                              className="form-check-label"
+                              htmlFor="anonymousCheck"
+                            >
+                              Post anonymously
+                            </label>
+                          </div>
                         </div>
-                      </div>
+                        <div className="">
+                          <div className="">
+                            <label className="fw-bold pb-2">Title</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={title}
+                              onChange={(e) => setTitle(e.target.value)}
+                            />
+                          </div>
+                        </div>
 
-
-                  
-
-                      <div className="">
-                        <div className="pb-3">
-                          <label className="fw-bold pb-2">Tags</label>
-                          <select
-                            className="form-control"
-                            onChange={handleSelect}
-                          >
-                            <option value="" hidden>
-                              Select tags...
-                            </option>
-                            {usertags.map((tag, index) => (
-                              <option key={index} value={tag}>
-                                {tag}
+                        <div className="">
+                          <div className="pb-3">
+                            <label className="fw-bold pb-2">Tags</label>
+                            <select
+                              className="form-control"
+                              onChange={handleSelect}
+                            >
+                              <option value="" hidden>
+                                Select tags...
                               </option>
-                            ))}
-                          </select>
-                          <div className="selected-tags mt-2">
-                            {selectedTags.map((tag, index) => (
-                              <span
-                                key={index}
-                                className="badge bg-secondary me-2"
-                              >
-                                {tag}
-                                <button
-                                  type="button"
-                                  className="btn-close btn-close-white ms-2"
-                                  aria-label="Remove"
-                                  onClick={() => handleRemove(tag)}
-                                />
-                              </span>
-                            ))}
+                              {usertags.map((tag, index) => (
+                                <option key={index} value={tag}>
+                                  {tag}
+                                </option>
+                              ))}
+                            </select>
+                            <div className="selected-tags mt-2">
+                              {selectedTags.map((tag, index) => (
+                                <span
+                                  key={index}
+                                  className="badge bg-secondary me-2"
+                                >
+                                  {tag}
+                                  <button
+                                    type="button"
+                                    className="btn-close btn-close-white ms-2"
+                                    aria-label="Remove"
+                                    onClick={() => handleRemove(tag)}
+                                  />
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="pt-4">
+                          <div className="pb-3">
+                            <textarea
+                              ref={textareaRef}
+                              className="form-control"
+                              rows="4"
+                              value={caption1}
+                              onChange={(e) => setCaption(e.target.value)}
+                            />
                           </div>
                         </div>
                       </div>
-
-                 
-
-                      <div className="pt-4">
-                        <div className="pb-3">
-                        
-                          <textarea
-                            ref={textareaRef}
-                            className="form-control"
-                            rows="4"
-                            value={caption1}
-                            onChange={(e) => setCaption(e.target.value)}
-                          />
-                        </div>
-                      </div>
-
-                    
                     </div>
                   </div>
-                </div>
-              </form>
-              <ModalFooter >
-              <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
-            </ModalFooter>
-            </ModalContent>
-          
-          </AskQuestionModal>
+                </form>
+                <ModalFooter>
+                  <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+                </ModalFooter>
+              </ModalContent>
+            </AskQuestionModal>
           </AskQuestionModal1>
         )}
       </MainContainer>
-      <Footer/>
+      <Footer />
     </>
   );
 };

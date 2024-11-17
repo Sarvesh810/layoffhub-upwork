@@ -12,6 +12,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross2 } from "react-icons/rx";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../config";
 import {
   Humburder,
   SideBarCon,
@@ -45,14 +46,11 @@ const SideBar = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await axios.get(
-          "https://api.layoffhub.ai/api/profile/",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${API_BASE_URL}/api/profile/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const userData = response.data;
         console.log("Fetched User Data:", userData);
         setFirstName(userData.user.first_name);

@@ -7,6 +7,7 @@ import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import { FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../config";
 
 const CompanyCard = lazy(() => import("./CompanyCard"));
 
@@ -17,7 +18,7 @@ const CompanyContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 30px;
- 
+
   padding: 0px;
 `;
 
@@ -40,14 +41,14 @@ const SearchContainer = styled.div`
   border-radius: 5px;
   display: flex;
   align-items: center;
-    @media (max-width:375px){
-   width: 320px !important;
+  @media (max-width: 375px) {
+    width: 320px !important;
   }
-    @media (max-width:435px){
-   width: 270px !important;
+  @media (max-width: 435px) {
+    width: 270px !important;
   }
-      @media (max-width:320px){
-   width: 240px !important;
+  @media (max-width: 320px) {
+    width: 240px !important;
   }
 `;
 
@@ -57,7 +58,6 @@ const SearchInput = styled.input`
   font-size: 16px;
   border: none;
   outline: none;
-  
 `;
 
 const CardHolder = styled.div`
@@ -76,19 +76,18 @@ const ButtonHolder = styled.div`
   flex-direction: column;
   gap: 15px;
   display: flex;
-   @media (max-width:520px){
-   width: 90%;
-   margin-left:30px;
+  @media (max-width: 520px) {
+    width: 90%;
+    margin-left: 30px;
   }
-     @media (max-width:430px){
-   width: 50% !important;
-   margin-left:140px !important;
+  @media (max-width: 430px) {
+    width: 50% !important;
+    margin-left: 140px !important;
   }
-    @media (max-width:399px){
-   width: 85% !important;
-   margin-left:30px !important;
+  @media (max-width: 399px) {
+    width: 85% !important;
+    margin-left: 30px !important;
   }
- 
 `;
 
 const FilterButton = styled.button`
@@ -101,17 +100,14 @@ const FilterButton = styled.button`
   justify-content: center;
   background-color: #888888;
   color: white;
-    @media (max-width:425px){
-   width: 320px !important;
-
-   
+  @media (max-width: 425px) {
+    width: 320px !important;
   }
-    @media (max-width:435px){
+  @media (max-width: 435px) {
     width: 270px !important;
-   
   }
-  @media (max-width:320px){
-   width: 240px !important;
+  @media (max-width: 320px) {
+    width: 240px !important;
   }
 `;
 
@@ -151,9 +147,7 @@ const Company = () => {
   const fetchCompanies = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        "https://api.layoffhub.ai/api/companies/"
-      );
+      const response = await axios.get(`${API_BASE_URL}/api/companies/`);
       setCompanies(response.data || []);
     } catch (error) {
       console.error("Error fetching companies:", error);
@@ -262,9 +256,7 @@ const Company = () => {
             <div className="pt-4 mb-5">
               <div className="row align-items-center">
                 <div className="col-12">
-                  <div className="col-md-12">
-                   
-                  </div>
+                  <div className="col-md-12"></div>
                   <ButtonHolder>
                     <SearchContainer>
                       <FaSearch size={20} />

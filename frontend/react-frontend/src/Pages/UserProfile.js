@@ -4,6 +4,7 @@ import { IoMdPerson } from "react-icons/io";
 import { BsCcCircle } from "react-icons/bs";
 import img from "../Images/person_3_sm.jpg";
 import axios from "axios";
+import { API_BASE_URL } from "../config";
 
 const UserProfile = () => {
   const [firstName, setFirstName] = useState("");
@@ -26,14 +27,11 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await axios.get(
-          "https://api.layoffhub.ai/api/profile/",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${API_BASE_URL}/api/profile/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const userData = response.data;
         console.log("Fetched User Data:", userData);
         localStorage.setItem("UserID", userData.user.id);
@@ -62,14 +60,11 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchReferralUrl = async () => {
       try {
-        const response = await axios.get(
-          "https://api.layoffhub.ai/api/refer/",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${API_BASE_URL}/api/refer/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const referralData = response.data;
         console.log("Fetched Referral Data:", referralData);
         setReferralUrl(referralData.referral_url); // Update state with referral URL
@@ -106,7 +101,7 @@ const UserProfile = () => {
 
     try {
       const result = await axios.put(
-        "https://api.layoffhub.ai/api/profile/update/",
+        `${API_BASE_URL}/api/profile/update/`,
         userdata,
         {
           headers: {
@@ -128,18 +123,17 @@ const UserProfile = () => {
 
       // Copy the text to the clipboard
       try {
-        document.execCommand('copy');
-        alert('Referral URL copied to clipboard!');
+        document.execCommand("copy");
+        alert("Referral URL copied to clipboard!");
       } catch (err) {
-        console.error('Failed to copy referral URL: ', err);
+        console.error("Failed to copy referral URL: ", err);
       }
     }
   };
 
   return (
     <div className="col-lg-12 col-md-12 d-flex flex-row user-profile-container">
-      <div style={{width:"100%"}}>
-        
+      <div style={{ width: "100%" }}>
         <SideBar />
       </div>
       <div className="main-content col-lg-8 col-md-6">
@@ -188,18 +182,23 @@ const UserProfile = () => {
                       ref={referralUrlRef}
                       value={referralUrl}
                       readOnly
-                      style={{ width: '68%', padding: '8px', borderRadius: '4px', border: '1px solid #ddd' }}
+                      style={{
+                        width: "68%",
+                        padding: "8px",
+                        borderRadius: "4px",
+                        border: "1px solid #ddd",
+                      }}
                     />
                     <button
                       onClick={handleCopyClick}
                       style={{
-                        marginLeft: '10px',
-                        padding: '8px 16px',
-                        border: 'none',
-                        borderRadius: '4px',
-                        backgroundColor: '#007bff',
-                        color: 'white',
-                        cursor: 'pointer'
+                        marginLeft: "10px",
+                        padding: "8px 16px",
+                        border: "none",
+                        borderRadius: "4px",
+                        backgroundColor: "#007bff",
+                        color: "white",
+                        cursor: "pointer",
                       }}
                     >
                       Copy

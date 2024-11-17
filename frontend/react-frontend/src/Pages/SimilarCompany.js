@@ -21,6 +21,7 @@ import {
   MainContainer,
 } from "./StyledSectorCompanies";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../config";
 
 const Similar = () => {
   const [companies, setCompanies] = useState([]);
@@ -33,7 +34,7 @@ const Similar = () => {
     const fetchSectorsAndCompanies = async () => {
       try {
         const response = await axios.get(
-          `https://api.layoffhub.ai/api/company_by_sector/${sector}/`
+          `${API_BASE_URL}/api/company_by_sector/${sector}/`
         );
         setCompanies(response.data);
         setLoading(false);
@@ -70,9 +71,9 @@ const Similar = () => {
               <ThreadsComtainer>
                 <Threds>Total Threads: {company.threads}</Threds>
               </ThreadsComtainer>
-         
+
               <DetailButton onClick={() => navigate(`/${company.name}`)}>
-              View Company
+                View Company
               </DetailButton>
             </CardContainer>
           ))}

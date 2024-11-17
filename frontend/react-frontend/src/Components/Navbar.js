@@ -28,6 +28,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import axios from "axios";
+import { API_BASE_URL } from "../config";
 
 const Navbar = () => {
   const [name, setName] = useState("");
@@ -66,7 +67,6 @@ const Navbar = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-
   const Signin = () => {
     navigate("/signin");
   };
@@ -76,14 +76,11 @@ const Navbar = () => {
 
   const fetchNotifications = async () => {
     try {
-      const response = await axios.get(
-        "https://api.layoffhub.ai/api/notifications/",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${API_BASE_URL}/api/notifications/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setNotifications(response.data || []);
       setVisibleNotifications(response.data.slice(0, 3));
     } catch (error) {
@@ -103,7 +100,7 @@ const Navbar = () => {
   const markAsRead = async (notificationId) => {
     try {
       await axios.patch(
-        `https://api.layoffhub.ai/api/notifications/${notificationId}/`,
+        `${API_BASE_URL}/api/notifications/${notificationId}/`,
         { is_read: true },
         {
           headers: {
@@ -132,7 +129,7 @@ const Navbar = () => {
 
   const fetchGroups = async () => {
     try {
-      const response = await axios.get("https://api.layoffhub.ai/api/groups/", {
+      const response = await axios.get(`${API_BASE_URL}/api/groups/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -146,16 +143,12 @@ const Navbar = () => {
   const handleChange = async () => {
     const user = { name, description };
     try {
-      const response = await axios.post(
-        "https://api.layoffhub.ai/api/groups/",
-        user,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.post(`${API_BASE_URL}/api/groups/`, user, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log("API response:", response);
     } catch (error) {
       console.error("Error posting data:", error);
@@ -227,10 +220,7 @@ const Navbar = () => {
 
         <ButtonContanier>
           <NotificationContrainer>
-            <BellButton
-              type="button"
-              onClick={toggleBell}
-            >
+            <BellButton type="button" onClick={toggleBell}>
               <FaBell />
             </BellButton>
             <Notification className="dop">
@@ -290,11 +280,15 @@ const Navbar = () => {
                           Profile
                         </Link>
                       </DropdownItem>
-                      
                     </div>
                   </div>
                 </DropdownItem>
-                <DropdownItem onClick={Log_Out} className="btn btn-primary text-white">Log-Out</DropdownItem>
+                <DropdownItem
+                  onClick={Log_Out}
+                  className="btn btn-primary text-white"
+                >
+                  Log-Out
+                </DropdownItem>
               </DropdownMenu>
             </UserMenu>
           ) : (

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import img1 from "../Images/logo-nobackground-1000.png";
 import { Spinner } from "react-bootstrap";
+import { API_BASE_URL } from "../config";
 
 const Signin = () => {
   const [username, setUsername] = useState("");
@@ -21,7 +22,7 @@ const Signin = () => {
       console.log("Submitting user:", user);
 
       const loginResponse = await axios.post(
-        "https://api.layoffhub.ai/api/login/",
+        `${API_BASE_URL}/api/login/`,
         user,
         {
           headers: {

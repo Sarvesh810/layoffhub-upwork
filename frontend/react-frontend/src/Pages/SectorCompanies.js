@@ -29,6 +29,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import Loader from "../Components/Loader";
 import Footer from "../Components/Footer";
+import { API_BASE_URL } from "../config";
 
 const Sector = () => {
   const [sectors, setSectors] = useState([]);
@@ -42,7 +43,7 @@ const Sector = () => {
     const fetchSectorsAndCompanies = async () => {
       try {
         const sectorResponse = await axios.get(
-          "https://api.layoffhub.ai/api/industries_sectors"
+          `${API_BASE_URL}/api/industries_sectors`
         );
         let sectorData = sectorResponse.data.map((sector) => ({
           ...sector,
@@ -59,9 +60,7 @@ const Sector = () => {
 
         const companyResponses = await Promise.all(
           uniqueSectors.map((sector) =>
-            axios.get(
-              `https://api.layoffhub.ai/api/company_by_sector/${sector.sector}/`
-            )
+            axios.get(`${API_BASE_URL}/api/company_by_sector/${sector.sector}/`)
           )
         );
 
@@ -90,7 +89,7 @@ const Sector = () => {
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
-    arrows: false, 
+    arrows: false,
     responsive: [
       {
         breakpoint: 2500,
@@ -133,7 +132,12 @@ const Sector = () => {
     ],
   };
 
-  const Loading = () => loading && <div><Loader/></div>;
+  const Loading = () =>
+    loading && (
+      <div>
+        <Loader />
+      </div>
+    );
 
   const handlePrevClick = (sector) => {
     if (sliderRefs.current[sector]) {
@@ -171,21 +175,20 @@ const Sector = () => {
                   <ThreadsComtainer>
                     <Threds>Total Threads: {company.threads}</Threds>
                   </ThreadsComtainer>
-                 
+
                   <DetailButton onClick={() => navigate(`/${company.name}`)}>
-                  View Company
+                    View Company
                   </DetailButton>
                 </CardContainer>
               ))}
             </StyledSlider>
             <ArrowsContainer>
-            <CustomArrow onClick={() => handlePrevClick(sector.sector)}>
+              <CustomArrow onClick={() => handlePrevClick(sector.sector)}>
                 <FaArrowLeft />
               </CustomArrow>
               <CustomArrow onClick={() => handleNextClick(sector.sector)}>
                 <FaArrowRight />
               </CustomArrow>
-              
             </ArrowsContainer>
           </IndustrySection>
         ))}
@@ -196,7 +199,7 @@ const Sector = () => {
         )}
       </SectionContainer>
 
-      <Footer/>
+      <Footer />
     </>
   );
 };
