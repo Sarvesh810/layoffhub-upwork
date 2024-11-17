@@ -1,0 +1,52 @@
+# .github/workflows/frontend-deploy.yml
+name: Deploy Frontend to cPanel
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "frontend/react-frontend/**" # Updated path
+
+jobs:
+  deploy-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: Install Dependencies
+        working-directory: ./frontend/react-frontend # Updated path
+        run: |
+          npm install
+          npm ci
+
+      - name: Build React App
+        working-directory: ./frontend/react-frontend # Updated path
+        run: |
+          npm run build
+
+      # Create .htaccess for React routing
+      - name: Create .htaccess
+        run: |
+          cd frontend/react-frontend/build  # Updated path
+          echo "Options -MultiViews" > .htaccess
+          echo "RewriteEngine On" >> .htaccess
+          echo "RewriteCond %{REQUEST_FILENAME} !-f" >> .htaccess
+          echo "RewriteRule ^ index.html [QSA,L]" >> .htaccess
+
+      - name: Deploy to cPanel
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ${{ secrets.CPANEL_SERVER }}
+          username: ${{ secrets.CPANEL_USERNAME }}
+          password: ${{ secrets.CPANEL_PASSWORD }}
+          local-dir: ./frontend/react-frontend/build/ # Updated path
+          server-dir: /public_html/
+          dangerous-clean-slate: true
