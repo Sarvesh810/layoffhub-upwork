@@ -8,6 +8,8 @@ on:
     paths:
       - "frontend/react-frontend/**" # Updated path
 
+  workflow_dispatch:
+
 jobs:
   deploy-frontend:
     runs-on: ubuntu-latest
