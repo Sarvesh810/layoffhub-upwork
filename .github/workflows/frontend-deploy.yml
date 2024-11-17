@@ -1,4 +1,3 @@
-# .github/workflows/frontend-deploy.yml
 name: Deploy Frontend to cPanel
 
 on:
@@ -7,42 +6,46 @@ on:
       - main
     paths:
       - "frontend/react-frontend/**" # Updated path
-
-  workflow_dispatch:
+  workflow_dispatch: # Allows manual triggering of this workflow
 
 jobs:
   deploy-frontend:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      # Step 2: Set up Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: "18"
 
+      # Step 3: Install dependencies
       - name: Install Dependencies
         working-directory: ./frontend/react-frontend # Updated path
         run: |
           npm install
-          CI=false npm run build # Prevent ESLint warnings from failing the build
+          npm ci
 
+      # Step 4: Build React app
       - name: Build React App
         working-directory: ./frontend/react-frontend # Updated path
         run: |
-          npm run build
+          CI=false npm run build # Prevent ESLint warnings from failing the build
 
-      # Create .htaccess for React routing
+      # Step 5: Create .htaccess for React routing
       - name: Create .htaccess
+        working-directory: ./frontend/react-frontend/build # Updated path
         run: |
-          cd frontend/react-frontend/build  # Updated path
           echo "Options -MultiViews" > .htaccess
           echo "RewriteEngine On" >> .htaccess
           echo "RewriteCond %{REQUEST_FILENAME} !-f" >> .htaccess
           echo "RewriteRule ^ index.html [QSA,L]" >> .htaccess
 
+      # Step 6: Deploy to cPanel via FTP
       - name: Deploy to cPanel
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
