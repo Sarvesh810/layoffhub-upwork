@@ -305,10 +305,11 @@ class Sector(models.Model):
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
+    name = models.CharField(max_length=255, unique=True)
+    
+    def save(self, *args, **kwargs):
+        self.name = self.name.strip().lower()
+        super().save(*args, **kwargs)
 
 
 class Community(models.Model):

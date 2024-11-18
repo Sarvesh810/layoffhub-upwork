@@ -370,7 +370,10 @@ class QuestionSerializer(serializers.ModelSerializer):
                 pass
 
         for tag_name in tag_names:
-            tag, created = Tag.objects.get_or_create(name=tag_name)
+            tag_name_cleaned = tag_name.strip()
+            tag = Tag.objects.filter(name__iexact=tag_name_cleaned).first()
+            if not tag:
+                tag = Tag.objects.create(name=tag_name_cleaned)
             question.tags.add(tag)
 
         return question
