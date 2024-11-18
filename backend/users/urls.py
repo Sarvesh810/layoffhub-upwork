@@ -16,6 +16,7 @@ from .views import GroupView, ManageGroupView, GroupPostsCreateAndListView, Logo
 from myproject.urls import schema_view
 from rest_framework.routers import DefaultRouter
 
+from .views import test_connection
 
 urlpatterns = [
     path('signup/', RegisterView.as_view(), name='signup'),
@@ -80,4 +81,5 @@ urlpatterns = [
     path('fetch-data/<str:ticker>/', fetch_data, name='fetch_data'),
     path('display-data/<str:ticker>/', DisplayData.as_view(),name = 'display-data'),
 
+    path('test/', test_connection, name="test_connection"),
 ]

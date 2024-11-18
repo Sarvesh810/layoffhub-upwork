@@ -1144,3 +1144,8 @@ class DisplayData(APIView):
 
         # Return the response as a JSON array
         return Response(response_data, status=status.HTTP_200_OK, content_type="application/json")
+
+
+# A simple function to send a test message
+def test_connection(request):
+    return JsonResponse({"status": "Backend is reachable!"})
