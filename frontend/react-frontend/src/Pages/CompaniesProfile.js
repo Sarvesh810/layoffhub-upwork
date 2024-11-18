@@ -347,6 +347,9 @@ const CompaniesProfile = () => {
   };
 
   const ask_a_question = async () => {
+    const token = localStorage.getItem("access-token");
+    const randomUsername = localStorage.getItem("random-username");
+
     const payload = {
       title,
       caption: caption1,
@@ -357,14 +360,22 @@ const CompaniesProfile = () => {
       tag_names: selectedTags,
       dateposted: new Date().toISOString(),
       author: "AuthorName",
+      randomUsername: randomUsername,
     };
 
+    const config = {
+      headers: {},
+    };
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
     try {
-      await axios.post(`${API_BASE_URL}/api/ask_a_question/`, payload, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.post(`${API_BASE_URL}/api/ask_a_question/`, payload, config);
       alert("Question submitted successfully!");
       setShowModal(false);
+      window.location.reload();
     } catch (error) {
       console.error(
         "Error submitting question:",
@@ -389,11 +400,7 @@ const CompaniesProfile = () => {
     ask_a_question();
   };
   const handleStartDiscussionClick = () => {
-    if (!token) {
-      alert("Please login to start a discussion.");
-    } else {
-      setShowModal(true);
-    }
+    setShowModal(true);
   };
   const handleButtonClick = () => {
     setShowModal(false);
