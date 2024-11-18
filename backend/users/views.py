@@ -488,11 +488,14 @@ class LogoutView(APIView):
 class QuestionCreateView(generics.CreateAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
 
     def perform_create(self, serializer):
         # Save the question with or without author based on is_anonymous field
-        author = self.request.user if not serializer.validated_data.get('is_anonymous') else None
+        if (self.request.user.is_authenticated):
+            author = self.request.user if not serializer.validated_data.get('is_anonymous') else None
+        else:
+            author = None
         serializer.save(author=author)
 
 

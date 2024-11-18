@@ -185,6 +185,7 @@ class Question(models.Model):
     caption = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    randomUsername = models.CharField(max_length=255, null=True)
     is_anonymous = models.BooleanField(default=False)
     companies = models.ManyToManyField('Company', blank=True, related_name='questions')
     sectors = models.ManyToManyField('Sector', blank=True, related_name='questions')
@@ -194,7 +195,11 @@ class Question(models.Model):
     def __str__(self):
         if self.is_anonymous:
             return f'Anonymous Question {self.id}'
-        return f'{self.author.username}\'s Question' if self.author else f'Anonymous Question {self.id}'
+        
+        if (self.author):
+            return self.author.username
+        else:
+            return self.randomUsername
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

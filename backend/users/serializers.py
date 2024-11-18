@@ -334,7 +334,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'user', 'title', 'community', 'view_count', 'image', 'featured_image', 'caption', 'is_anonymous',
             'company_ids', 'sector_ids', 'tag_names', 'companies', 'sectors', 'tags', 'answers',
-            'date_posted', 'author_username', 'author_profile_image', 'votes'
+            'date_posted', 'author_username', 'author_profile_image', 'votes', 'randomUsername'
         ]
         read_only_fields = ['companies', 'sectors', 'tags', 'answers']
 
@@ -346,7 +346,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         return None
 
     def get_author_username(self, obj):
-        return obj.author.username if obj.author else None
+        return obj.author.username if obj.author else obj.randomUsername
 
     def create(self, validated_data):
         company_ids = validated_data.pop('company_ids', [])
