@@ -14,7 +14,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../config";
 import {
-  Humburder,
+  Hamburger,
   SideBarCon,
   ButtonDiv,
   SidebarContainer,
@@ -83,9 +83,9 @@ const SideBar = () => {
   return (
     <>
       <MainContainer style={{ height: "auto" }}>
-        <Humburder>
+        <Hamburger>
           <GiHamburgerMenu onClick={toggleMenu} />
-        </Humburder>
+        </Hamburger>
         <SideBarCon showMenu={showMenu}>
           <SidebarContainer>
             <div className="row auto-height-div">

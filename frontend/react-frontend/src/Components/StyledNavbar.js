@@ -31,7 +31,7 @@ export const MenuContainer = styled.ul`
   gap: 30px;
   margin: 0%;
   padding: 0%;
-  @media (max-width: 700px) {
+  @media (max-width: 768px) {
     flex-direction: ${({ showMenu }) => (showMenu ? "column" : "row")};
     display: ${({ showMenu }) => (showMenu ? "flex" : "none")};
     position: absolute;
@@ -48,40 +48,38 @@ export const MenuContainer = styled.ul`
 `;
 export const SideBarCon = styled.div`
   display: flex;
-  width:80%;
+  width: 80%;
   @media (max-width: 700px) {
     display: ${({ showMenu }) => (showMenu ? "flex" : "none")};
     position: absolute;
     z-index: 9999;
-     width:100%;
+    width: 100%;
   }
 `;
-export const ButtonDiv =styled.div`
-width:20%;
-display:none;
- @media (max-width: 700px) {
+export const ButtonDiv = styled.div`
+  width: 20%;
+  display: none;
+  @media (max-width: 700px) {
     display: flex;
-    color:red;
-    justify-content:end;
-     background: rgba(255, 255, 255, 0.5); /* Semi-transparent background */
-            backdrop-filter: blur(10px); /* Apply blur effect */
-    font-size:22px;
+    color: red;
+    justify-content: end;
+    background: rgba(255, 255, 255, 0.5); /* Semi-transparent background */
+    backdrop-filter: blur(10px); /* Apply blur effect */
+    font-size: 22px;
   }
-`
-export const SidebarContainer =styled.div`
-width:80%;
-background-color:black;
-align-items:center;
-justify-content:center;
- @media (max-width: 700px) {
+`;
+export const SidebarContainer = styled.div`
+  width: 80%;
+  background-color: black;
+  align-items: center;
+  justify-content: center;
+  @media (max-width: 700px) {
     display: flex;
-    color:yellow;
-    font-size:22px;
+    color: yellow;
+    font-size: 22px;
   }
-`
-export const closeButton =styled.button`
-
-` 
+`;
+export const closeButton = styled.button``;
 export const MenuList = styled.li`
   font-size: 20px;
   font-weight: 500;
@@ -97,61 +95,113 @@ export const MenuList = styled.li`
 `;
 
 export const Button = styled.button`
-  width: 100px;
+  width: 190px;
   height: 50px;
-  color: white;
-  background-color: rgb(0, 102, 255);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 8px;
-  &:hover {
-    color: rgb(0, 102, 255);
-    background-color: white;
-    border: 1px solid rgb(0, 102, 255);
-  }
-  @media (max-width: 700px) {
-    display: none;
-  }
-`;
-export const Button3 = styled.button`
-  width: 100px;
-  height: 50px;
-  color: white;
-  background-color: rgb(0, 102, 255);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 8px;
-  &:hover {
-    color: rgb(0, 102, 255);
-    background-color: white;
-    border: 1px solid rgb(0, 102, 255);
-  }
-`;
-export const Button1 = styled.button`
-  width: 100px;
-  height: 50px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 8px;
-  color: rgb(0, 102, 255);
   background-color: white;
-  border: 1px solid rgb(0, 102, 255);
+  color: #333333;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  outline: none;
+
   &:hover {
+    background-color: #333333;
     color: white;
-    background-color: rgb(0, 102, 255);
-    border: none;
+    border: 1px solid #333333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
-  @media (max-width: 700px) {
-    display: none;
+
+  &:focus {
+    outline: 2px solid #666666;
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 750px) {
+    width: 150px;
+    height: 40px;
+    font-size: 14px;
+    padding: 0 15px;
   }
 `;
+
+export const Button3 = styled.button`
+  width: 190px;
+  height: 50px;
+  background-color: white;
+  color: #333333;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  outline: none;
+
+  &:hover {
+    background-color: #333333;
+    color: white;
+    border: 1px solid #333333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  &:focus {
+    outline: 2px solid #666666;
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 750px) {
+    width: 150px;
+    height: 40px;
+    font-size: 14px;
+    padding: 0 15px;
+  }
+`;
+
+export const Button1 = styled.button`
+  width: 190px;
+  height: 50px;
+  background-color: white;
+  color: #333333;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  outline: none;
+
+  &:hover {
+    background-color: #333333;
+    color: white;
+    border: 1px solid #333333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  &:focus {
+    outline: 2px solid #666666;
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 750px) {
+    width: 150px;
+    height: 40px;
+    font-size: 14px;
+    padding: 0 15px;
+  }
+`;
+
 export const ButtonContanier = styled.div`
   display: flex;
   align-items: center;
@@ -179,17 +229,16 @@ export const ButtonContanier1 = styled.div`
   }
 `;
 
-export const Humburder = styled.div`
+export const Hamburger = styled.div`
   display: none;
   @media (max-width: 700px) {
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 50px;
-    color: rgb(0, 102, 255);
+    color: #555;
     @media (max-width: 500px) {
       width: 30px;
-    
     }
   }
 `;
@@ -296,10 +345,24 @@ export const Message = styled.p`
   text-wrap: pretty;
 `;
 
-export const BellButton = styled.div`
+export const BellButton = styled.button`
   font-size: 30px;
-  color: rgb(0, 102, 255);
+  color: #555; /* Set the color of the icon */
+  border: 1px solid #555; /* Add a border */
+  border-radius: 50%; /* Make the border circular */
+  padding: 5px; /* Add padding for spacing between the icon and border */
+  background: transparent; /* Ensure background is transparent */
+  display: flex; /* Center-align the icon */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
   appearance: none;
+  transition: all 0.3s ease; /* Add smooth transitions for hover effects */
+
+  &:hover {
+    color: #888; /* Change the color on hover */
+  }
+
   @media (max-width: 500px) {
     font-size: 24px;
   }

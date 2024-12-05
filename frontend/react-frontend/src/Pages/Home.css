@@ -1,0 +1,48 @@
+.title {
+    color: #555;
+}
+
+.d-flex {
+  display: flex;
+  flex-direction: column; /* Stack vertically on small screens */
+}
+
+.trending-discussions,
+.companies-section {
+  flex: 0 0 100%; /* Full width on small screens */
+  padding-right: 0;
+  margin-left: 0;
+}
+
+@media (min-width: 992px) {
+  .d-flex {
+    flex-direction: row; /* Back to row layout on larger screens */
+  }
+
+  .trending-discussions {
+    flex: 0 0 70%;
+    padding-right: 20px;
+  }
+
+  .companies-section {
+    flex: 0 0 30%;
+    margin-left: auto;
+  }
+}
+
+/* Additional responsive adjustments */
+.mx-5 {
+  margin-left: 1rem !important;
+  margin-right: 1rem !important;
+}
+
+.px-5 {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
+@media (max-width: 576px) {
+  .pt-5 {
+    padding-top: 1rem !important;
+  }
+}

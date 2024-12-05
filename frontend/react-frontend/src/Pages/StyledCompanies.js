@@ -19,26 +19,42 @@ export const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: end;
+  margin-top: 20px;
 `;
+
 export const Button = styled.button`
   width: 190px;
   height: 50px;
-  background-color: orange;
-  color: white;
-  border: none;
-  border-radius: 8px;
+  background-color: white;
+  color: #333333;
+  border: 1px solid #333333;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-weight: 500;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  outline: none;
+
   &:hover {
-    background-color: white;
-    color: orange;
-    border: 1px solid orange;
+    background-color: #333333;
+    color: white;
+    border: 1px solid #333333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
+
+  &:focus {
+    outline: 2px solid #666666;
+    outline-offset: 2px;
+  }
+
   @media (max-width: 750px) {
     width: 150px;
     height: 40px;
     font-size: 14px;
+    padding: 0 15px;
   }
 `;
 
@@ -59,6 +75,7 @@ export const Heading = styled.h1`
   font-weight: 500;
   font-size: 28px;
   margin: 0%;
+  color: #555;
   @media (max-width: 750px) {
     font-size: 22px;
   }
@@ -123,14 +140,13 @@ export const CompnayDetail = styled.div`
   min-height: 50px;
   display: flex;
   gap: 30px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #ccc;
   padding: 0px;
   margin: 0px;
   @media (max-width: 610px) {
     gap: 0px;
   }
 `;
-
 
 export const NumberContainer = styled.div`
   width: 70px;
@@ -180,11 +196,30 @@ export const CompanyData = styled.div`
 `;
 
 export const CompnayPic = styled.img`
+  /* Size and Shape */
   width: 50px;
   height: 50px;
-  border-radius: 20%;
-  object-fit: cover;
+  border-radius: 20%; /* Rounded corners */
+  object-fit: cover; /* Ensures the image covers the area proportionally */
+
+  /* Border for a polished look */
+  border: 2px solid #f0f0f0;
+
+  /* Smooth Transitions */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  /* Hover Effect */
+  &:hover {
+    transform: scale(1.1); /* Slightly enlarge the image */
+  }
+
+  /* Active/Pressed State */
+  &:active {
+    transform: scale(0.95); /* Slightly shrink to mimic a pressed effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
 `;
+
 export const NameHolder = styled.div`
   display: flex;
   flex-direction: column;
@@ -213,10 +248,13 @@ export const CompnayName = styled.p`
   font-weight: 600;
   font-size: 16px;
   margin: 0%;
+  padding-left: 10px;
 `;
+
 export const CompnaySector = styled.p`
   font-weight: 500;
   font-size: 10px;
   color: #888888;
   margin: 0%;
+  padding-left: 10px;
 `;

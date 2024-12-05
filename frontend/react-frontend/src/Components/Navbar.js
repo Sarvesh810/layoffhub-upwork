@@ -11,7 +11,8 @@ import {
   Button3,
   ButtonContanier,
   ButtonContanier1,
-  Humburder,
+  ButtonContanier2,
+  Hamburger,
   UserMenu,
   DropdownItem,
   DropdownMenu,
@@ -206,16 +207,16 @@ const Navbar = () => {
               Analytics
             </Link>
           </MenuList>
-          {!isLoggedIn ? (
-            <ButtonContanier1>
-              <>
-                <Button3 onClick={Signin}>Sign-in</Button3>
-                <Button3 onClick={Signup}>Sign-up</Button3>
-              </>
-            </ButtonContanier1>
-          ) : (
-            <span></span> // Render the username as a span element or any other HTML element you prefer
-          )}
+          {
+            !isLoggedIn ? (
+              <ButtonContanier1>
+                <>
+                  <Button3 onClick={Signin}>Sign-in</Button3>
+                  <Button3 onClick={Signup}>Sign-up</Button3>
+                </>
+              </ButtonContanier1>
+            ) : null // Render the username as a span element or any other HTML element you prefer
+          }
         </MenuContainer>
 
         <ButtonContanier>
@@ -253,9 +254,9 @@ const Navbar = () => {
                       )}
                     </div>
                   ))}
-                  <ShowButton onClick={handleShowMore}>
+                  <Button onClick={handleShowMore}>
                     {showAll ? "Show Less" : "Show More"}
-                  </ShowButton>
+                  </Button>
                 </AllNotification>
               )}
             </Notification>
@@ -292,14 +293,18 @@ const Navbar = () => {
               </DropdownMenu>
             </UserMenu>
           ) : (
-            <>
-              <Button onClick={Signin}>Sign-in</Button>
-              <Button1 onClick={Signup}>Sign-up</Button1>
-            </>
+            <ButtonContanier2>
+              {!isLoggedIn && (
+                <>
+                  <Button onClick={Signin}>Sign-in</Button>
+                  <Button1 onClick={Signup}>Sign-up</Button1>
+                </>
+              )}
+            </ButtonContanier2>
           )}
-          <Humburder>
+          <Hamburger>
             <GiHamburgerMenu onClick={toggleMenu} />
-          </Humburder>
+          </Hamburger>
         </ButtonContanier>
       </MainContainer>
     </>

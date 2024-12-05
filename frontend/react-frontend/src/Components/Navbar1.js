@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export const DropdownMenu = styled.div`
   display: ${({ showDropdown }) => (showDropdown ? "block" : "none")};
@@ -11,11 +11,10 @@ export const DropdownMenu = styled.div`
   z-index: 1000;
   min-width: 160px;
   overflow: hidden;
-  width:30px;
-  `
-;
+  width: 30px;
+`;
 
-export const DropdownItem = styled.div `
+export const DropdownItem = styled.div`
   padding: 12px 16px;
   cursor: pointer;
   font-size: 16px; /* Increased font size */
@@ -30,8 +29,8 @@ export const DropdownItem = styled.div `
     text-decoration: none;
     color: inherit;
     display: block;
-  }`
-;
+  }
+`;
 
 export const Button2 = styled.button`
   display: none;
@@ -45,7 +44,7 @@ export const Button2 = styled.button`
     border-radius: 10px;
     border: 2px solid #7b2cbf;
     background-color: white;
-    color: black;
+    color: #555;
     font-size: 16px; /* Increased font size */
     cursor: pointer;
     a {
@@ -60,10 +59,8 @@ export const Button2 = styled.button`
       background-color: #7b2cbf;
       color: white;
     }
-  }`
-
-
-;
+  }
+`;
 export const UserMenu = styled.div`
   position: relative;
   display: flex;
@@ -72,7 +69,7 @@ export const UserMenu = styled.div`
   font-size: 16px; /* Increased font size */
   color: #333;
   padding: 8px 12px;
-width: 100%;
+  width: 100%;
   border-radius: 4px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -84,8 +81,8 @@ width: 100%;
 
   svg {
     margin-left: 8px;
-  }`
-;
+  }
+`;
 export const Butto = styled.button`
   max-width: 200px;
   padding: 0px 10px;
@@ -110,8 +107,8 @@ export const Butto = styled.button`
   }
   @media (max-width: 500px) {
     display: none;
-  }`
-;
+  }
+`;
 export const Button1 = styled.button`
   max-width: 200px;
   padding: 0px 10px;
@@ -136,5 +133,5 @@ export const Button1 = styled.button`
   }
   @media (max-width: 500px) {
     display: none;
-  }`
-;
+  }
+`;

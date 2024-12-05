@@ -46,6 +46,7 @@ import {
 } from "./StyledCompaniesProfile";
 import { FaSearch } from "react-icons/fa";
 import { API_BASE_URL } from "../config";
+import "./Companies.css";
 
 const Companies = () => {
   const [companies, setCompanies] = useState([]);
@@ -64,6 +65,30 @@ const Companies = () => {
   const [companyData, setCompanyData] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("access-token");
+
+  const LeftArrowIcon = ({ size = 24 }) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+    >
+      <path d="M14 7l-5 5 5 5V7z" />
+    </svg>
+  );
+
+  const RightArrowIcon = ({ size = 24 }) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+    >
+      <path d="M10 17l5-5-5-5v10z" />
+    </svg>
+  );
 
   useEffect(() => {
     const fetchCompanies = async () => {
@@ -435,44 +460,6 @@ const Companies = () => {
                           </div>
                           <div className="pt-4">
                             <div className="pb-3">
-                              {/*     <div className="toolbar d-flex  flex-wrap mb-2">
-                                <div className="btn-group me-2">
-                                  <button type="button" className="btn" onClick={() => applyFormatting("bold")}>
-                                    <FaBold />
-                                  </button>
-                                  <button type="button" className="btn" onClick={() => applyFormatting("italic")}>
-                                    <FaItalic />
-                                  </button>
-                                  <button type="button" className="btn" onClick={() => applyFormatting("underline")}>
-                                    <FaUnderline />
-                                  </button>
-                                  <button type="button" className="btn" onClick={() => applyFormatting("strikeThrough")}>
-                                    <FaStrikethrough />
-                                  </button>
-                                </div>
-                                <div className="btn-group me-2">
-                                  <button type="button" className="btn" onClick={() => applyFormatting("justifyLeft")}>
-                                    <FaAlignLeft />
-                                  </button>
-                                  <button type="button" className="btn" onClick={() => applyFormatting("justifyCenter")}>
-                                    <FaAlignCenter />
-                                  </button>
-                                  <button type="button" className="btn" onClick={() => applyFormatting("justifyRight")}>
-                                    <FaAlignRight />
-                                  </button>
-                                </div>
-                                <div className="btn-group me-2">
-                                  <button type="button" className="btn" onClick={() => applyFormatting("insertOrderedList")}>
-                                    <FaListOl />
-                                  </button>
-                                  <button type="button" className="btn" onClick={() => applyFormatting("insertUnorderedList")}>
-                                    <FaListUl />
-                                  </button>
-                                  <button type="button" className="btn" onClick={() => applyFormatting("createLink")}>
-                                    <FaLink />
-                                  </button>
-                                </div>
-                              </div> */}
                               <textarea
                                 ref={textareaRef}
                                 className="form-control"
@@ -509,26 +496,8 @@ const Companies = () => {
           </HeadingContainer>
           <div className="space">
             {currentCompanies.map((company, index) => {
-              const isFirstItem = index === 0;
-              const isLastItem = index === currentCompanies.length - 1;
-
-              const applyBackgroundColor =
-                (index + 1) % 2 === 0 && index % 2 === 1;
-
               return (
                 <CompnayDetail key={company.id}>
-                  <NumberContainer
-                    style={{
-                      borderRadius: `${isFirstItem ? "8px 0px" : "0"} ${
-                        isLastItem ? "0px 0px 8px" : "0"
-                      }`,
-                      backgroundColor: applyBackgroundColor
-                        ? "#1376f89f"
-                        : "#1376f8",
-                    }}
-                  >
-                    {(currentPage - 1) * companiesPerPage + index + 1}
-                  </NumberContainer>
                   <ContextContainer>
                     <CompanyData>
                       <CompnayPic src={company.picture} alt={company.name} />
@@ -537,50 +506,60 @@ const Companies = () => {
                         <CompnaySector>{company.sector}</CompnaySector>
                       </NameHolder>
                     </CompanyData>
-                    <DetailButton onClick={() => navigate(`/${company.name}`)}>
+                    <Button onClick={() => navigate(`/${company.name}`)}>
                       View Company
-                    </DetailButton>
+                    </Button>
                   </ContextContainer>
                 </CompnayDetail>
               );
             })}
           </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "end",
-              marginTop: "20px",
-            }}
-          >
-            <div className="p-2 jaba2">
-              <button onClick={goToPreviousPage} disabled={currentPage === 1}>
-                <RiArrowDropLeftLine size={30} />
+          <div className="pagination-container">
+            <div className="pagination-wrapper">
+              {/* Previous Page Button */}
+              <button
+                onClick={goToPreviousPage}
+                disabled={currentPage === 1}
+                className="pagination-btn"
+              >
+                <LeftArrowIcon />
               </button>
+
+              {/* First Page and Ellipsis */}
               {currentPage > 3 && (
                 <>
-                  <button onClick={() => goToPage(1)}>1</button>
-                  {currentPage > 4 && <span>...</span>}
+                  <button
+                    onClick={() => goToPage(1)}
+                    className="page-number-btn"
+                  >
+                    1
+                  </button>
+                  {currentPage > 4 && (
+                    <span className="pagination-ellipsis">...</span>
+                  )}
                 </>
               )}
+
+              {/* Page Buttons */}
               {visiblePages.map((page, index) => (
                 <button
                   key={index}
                   onClick={() => typeof page === "number" && goToPage(page)}
-                  style={{
-                    margin: "0 5px",
-                    fontWeight: page === currentPage ? "bold" : "normal",
-                    border: page === currentPage ? "2px solid #1376f8" : "none",
-                  }}
+                  className={`page-number-btn ${
+                    page === currentPage ? "active" : ""
+                  }`}
                 >
                   {page}
                 </button>
               ))}
+
+              {/* Next Page Button */}
               <button
                 onClick={goToNextPage}
                 disabled={currentPage === totalPages}
-                className="mx-2"
+                className="pagination-btn"
               >
-                <RiArrowDropRightLine size={30} />
+                <RightArrowIcon />
               </button>
             </div>
           </div>

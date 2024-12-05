@@ -329,13 +329,119 @@ background-color: white;
 border: 1px solid black;
  border-radius: 20%;
 }
-@media  (max-width: 768px) {
- .iamge1{
-   height: 10vh;
-  border: 1px solid green;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-self: start;
+
+/* Responsive Adjustments for Small Screens */
+@media (max-width: 768px) {
+  .iamge1{
+    height: 10vh;
+    border: 1px solid green;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-self: start;
+  }
+  .HomeSlid {
+    padding: 10px !important;
+  }
+
+  /* Compact card layout */
+  .card {
+    margin-bottom: 15px;
+  }
+
+  .card-body {
+    padding: 15px !important;
+  }
+
+  /* Optimize header section for small screens */
+  .card-body > .d-flex.justify-content-between.align-items-center.mb-3.mt-3.position-relative {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+
+  .card-body > .d-flex.justify-content-between.align-items-center.mb-3.mt-3.position-relative > div {
+    width: 100%;
+    border-right: none !important;
+    margin: 5px 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Compact company and tag sections */
+  .card-body div[style*="flexBasis"] {
+    flex-basis: 100% !important;
+    text-align: left;
+    margin: 5px 0 !important;
+  }
+
+  /* Optimize action buttons */
+  .d-flex.justify-content-between.align-items-center.mt-2 {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 10px;
+  }
+
+  .d-flex.align-items-center.gap-2 {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  /* Responsive image sizing */
+  .profile-picture {
+    width: 30px !important;
+    height: 30px !important;
+    margin-right: 10px !important;
+  }
+
+  /* Compact text sizes */
+  .card-body p {
+    font-size: 12px !important;
+  }
+
+  .card-body h5 {
+    font-size: 16px !important;
+  }
+
+  /* Load More Button */
+  .btn.w-100 {
+    width: 100% !important;
+    margin-top: 10px;
+  }
+
+  /* Tags */
+  .badge {
+    margin-bottom: 5px;
+    font-size: 10px !important;
+  }
 }
+
+/* Extra Small Devices (Phones) */
+@media (max-width: 480px) {
+  .card-body {
+    padding: 10px !important;
+  }
+
+  .d-flex.align-items-center {
+    flex-wrap: wrap;
+  }
+
+  /* Even more compact text */
+  .card-body p {
+    font-size: 11px !important;
+  }
+
+  .card-body h5 {
+    font-size: 14px !important;
+  }
+
+  /* Tighter action buttons */
+  .d-flex.justify-content-between.align-items-center.mt-2 > div {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  /* Compact icon sizes */
+  svg {
+    width: 16px;
+    height: 16px;
+  }
 }

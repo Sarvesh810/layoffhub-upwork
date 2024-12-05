@@ -91,23 +91,38 @@ const ButtonHolder = styled.div`
 `;
 
 const FilterButton = styled.button`
-  width: 400px;
-  height: 40px;
-  border: none;
-  border-radius: 5px;
+  width: 190px;
+  height: 50px;
+  background-color: white;
+  color: #333333;
+  border: 1px solid #333333;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #888888;
-  color: white;
-  @media (max-width: 425px) {
-    width: 320px !important;
+  font-weight: 500;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  outline: none;
+
+  &:hover {
+    background-color: #333333;
+    color: white;
+    border: 1px solid #333333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
-  @media (max-width: 435px) {
-    width: 270px !important;
+
+  &:focus {
+    outline: 2px solid #666666;
+    outline-offset: 2px;
   }
-  @media (max-width: 320px) {
-    width: 240px !important;
+
+  @media (max-width: 750px) {
+    width: 150px;
+    height: 40px;
+    font-size: 14px;
+    padding: 0 15px;
   }
 `;
 

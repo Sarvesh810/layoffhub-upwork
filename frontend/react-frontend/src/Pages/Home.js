@@ -6,6 +6,7 @@ import axios from "axios";
 import Companies from "./Companies";
 import { ContantHolder } from "./StyledCompanies";
 import { API_BASE_URL } from "../config";
+import "./Home.css";
 
 const Popular = lazy(() => import("../Components/Popular"));
 const Answer = lazy(() => import("../Components/Answer"));
@@ -452,23 +453,30 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <div>
-        <div className="col-12 col-sm-12 col-md-12 col-lg-12 pt-4">
-          <div className="">
-            <Companies />
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-12 p-0">
+            <div className="d-flex flex-column flex-lg-row justify-content-between align-items-stretch">
+              {/* Trending Discussions section */}
+              <div className="trending-discussions w-100">
+                <div className="mx-3 mx-md-5 px-md-5 pt-3 pt-md-5">
+                  <h2 class="title">Trending Discussions</h2>
+                </div>
+                <div className="olll">
+                  <ContantHolder>
+                    <HomeSlid />
+                  </ContantHolder>
+                </div>
+              </div>
 
-            <div className="mx-5 px-5 pt-5">
-              <h2>Trending Discussion</h2>
-            </div>
-            <div className="olll">
-              <ContantHolder>
-                <HomeSlid />
-              </ContantHolder>
+              {/* Companies section */}
+              <div className="companies-section w-100">
+                <Companies />
+              </div>
             </div>
           </div>
         </div>
       </div>
-
       <Footer />
     </>
   );

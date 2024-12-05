@@ -1,7 +1,7 @@
 import styled from "styled-components";
 export const CardContainer = styled.div`
   width: 350px;
-  height: 200px;
+  height: 150px;
   display: flex;
   padding: 15px;
   gap: 5px;
@@ -9,7 +9,8 @@ export const CardContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
-  background: linear-gradient(to bottom, blue 29%, transparent 30%) left / 2px 100% no-repeat;
+  background: linear-gradient(to bottom, blue 29%, transparent 30%) left / 2px
+    100% no-repeat;
 
   border-radius: 5px;
 `;
@@ -46,19 +47,38 @@ export const CompnaySector = styled.p`
 `;
 
 export const DetailButton = styled.button`
-  width: 170px;
-  height: 40px;
+  width: 190px;
+  height: 50px;
+  background-color: white;
+  color: #333333;
+  border: 1px solid #333333;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #1376f8;
-  color: white;
-  border: none;
-  border-radius: 8px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  outline: none;
+
   &:hover {
-    background-color: white;
-    color: #1376f8;
-    border: 1px solid #1376f8;
+    background-color: #333333;
+    color: white;
+    border: 1px solid #333333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  &:focus {
+    outline: 2px solid #666666;
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 750px) {
+    width: 150px;
+    height: 40px;
+    font-size: 14px;
+    padding: 0 15px;
   }
 `;
 
