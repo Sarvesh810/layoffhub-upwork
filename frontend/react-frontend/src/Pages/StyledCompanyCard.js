@@ -26,6 +26,17 @@ export const CompnayPic = styled.img`
   width: 40px;
   height: 40px;
 `;
+
+export const ThreadCompanyPic = styled.img`
+  width: 50px; /* Set width to define the square size */
+  height: 50px; /* Match height to width for a perfect square */
+  object-fit: cover; /* Ensures the image scales properly within the square */
+  border-radius: 8px; /* Remove any rounding for a square shape */
+  padding: 0; /* Ensure no padding inside the square */
+  margin: 0; /* Remove any margin that might be applied */
+  border: 1px solid #dee2e6; /* Optional: Add a border for visibility */
+`;
+
 export const NameHolder = styled.div`
   display: flex;
   flex-direction: column;

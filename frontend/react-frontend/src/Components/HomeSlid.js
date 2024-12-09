@@ -6,6 +6,7 @@ import { LiaComments } from "react-icons/lia";
 import AnswersGiven from "./AnswersGiven";
 import GiveAnswer from "./GiveAnswer";
 import Loader from "./Loader";
+import { ThreadCompanyPic } from "../Pages/StyledCompanyCard";
 import { API_BASE_URL } from "../config";
 
 const HomeSlid = () => {
@@ -191,40 +192,46 @@ const HomeSlid = () => {
                         margin: "0 20px 0 15px", // Added explicit left padding
                       }}
                     >
-                      <div className="row">
-                        <div className="col-12">
-                          {/* Company Names */}
-                          <span
-                            style={{
-                              fontSize: "medium",
-                              fontWeight: "bold",
-                              display: "block",
-                            }}
-                          >
-                            {" "}
-                            {/* Display block ensures proper spacing */}
-                            {item.companies
-                              .map((company) => company.name)
-                              .join(", ")}
-                          </span>
-                          <div>
-                            {/* Company Sectors */}
+                      {item.companies && item.companies.length > 0 && (
+                        <div className="row">
+                          <ThreadCompanyPic
+                            src={item.companies[0].picture}
+                            alt={item.companies[0].name}
+                          />
+                          <div className="col-12">
+                            {/* Company Names */}
                             <span
                               style={{
                                 fontSize: "medium",
+                                fontWeight: "bold",
                                 display: "block",
-                                marginTop: "5px",
                               }}
                             >
                               {" "}
-                              {/* Adjust spacing */}
+                              {/* Display block ensures proper spacing */}
                               {item.companies
-                                .map((company) => company.sector)
+                                .map((company) => company.name)
                                 .join(", ")}
                             </span>
+                            <div>
+                              {/* Company Sectors */}
+                              <span
+                                style={{
+                                  fontSize: "medium",
+                                  display: "block",
+                                  marginTop: "5px",
+                                }}
+                              >
+                                {" "}
+                                {/* Adjust spacing */}
+                                {item.companies
+                                  .map((company) => company.sector)
+                                  .join(", ")}
+                              </span>
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      )}
                     </div>
 
                     {/* Third Column - Tags */}
