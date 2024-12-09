@@ -323,7 +323,7 @@
 }
 .iamge1{
 height: 50px !important;
-min-width: 50px !important;
+width: 50px !important;
 display: flex;
 background-color: white;
 border: 1px solid black;
