@@ -24,7 +24,9 @@ const HomeSlid = () => {
         headers: { "Content-Type": "application/json" },
       });
       if (response.status === 200) {
-        const sortedQuestions = response.data.sort((a, b) => b.votes - a.votes);
+        const sortedQuestions = response.data.sort(
+          (a, b) => new Date(b.date_posted) - new Date(a.date_posted)
+        );
         setData(sortedQuestions);
         setPollStates(new Array(sortedQuestions.length).fill(false));
         setPollStates1(new Array(sortedQuestions.length).fill(false));
