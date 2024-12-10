@@ -470,9 +470,9 @@ const Home = () => {
               </div>
 
               {/* Companies section */}
-              <div className="companies-section w-100">
+              {/* <div className="companies-section w-100">
                 <Companies />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
