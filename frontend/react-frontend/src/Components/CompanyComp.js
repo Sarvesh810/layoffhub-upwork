@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import img1 from "../Images/person_3_sm.jpg";
 import "./HomeSlid.css";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import { LiaComments } from "react-icons/lia";
@@ -9,6 +8,7 @@ import AnswersGiven from "./AnswersGiven";
 import GiveAnswer from "./GiveAnswer";
 import Loader from "./Loader";
 import { API_BASE_URL } from "../config";
+import { ThreadCompanyPic } from "../Pages/StyledCompanyCard";
 
 const CompanyComp = ({ companyId, activesort, showModal }) => {
   const [pollStates, setPollStates] = useState([]);
@@ -148,184 +148,268 @@ const CompanyComp = ({ companyId, activesort, showModal }) => {
     }
   };
 
+  const formatTime = (dateString) => {
+    return new Date(dateString).toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    });
+  };
+
   return (
-    <div className="mx-3 pb-5 ">
-      {loading || sortLoading ? (
+    <div className="pb-5">
+      {loading ? (
         <Loader />
       ) : (
-        <>
-          <div className="row d-flex flex-column mdi p-0">
-            {data.slice(0, visibleCount).map((item, index) => (
-              <div className="col-12 mt-3 px-0" key={index}>
-                <div className="pb-3 ">
-                  <div className="card-body">
-                    <div className="d-flex justify-content-between align-items-center">
-                      <div className="d-flex align-items-center ">
+        <div className="row d-flex flex-column">
+          {data.slice(0, visibleCount).map((item, index) => (
+            <div className="col-12 mt-3" key={item.id}>
+              <div className="card pb-3">
+                <div className="card-body">
+                  {/* Header Section */}
+                  <div className="d-flex justify-content-between align-items-center mb-3 mt-3 position-relative">
+                    {/* First Column - Author Info */}
+                    <div
+                      className="px-2 position-relative"
+                      style={{
+                        flexBasis: "30%",
+                        borderRight: "1px solid #dee2e6",
+                      }}
+                    >
+                      <div className="d-inline-flex flex-row align-items-center">
+                        <img
+                          src={
+                            item.author_picture
+                              ? require(`../Images/${item.author_picture}`)
+                              : require("../Images/default-profile.jpg")
+                          }
+                          alt="User"
+                          className="rounded-circle me-3 profile-picture"
+                          style={{
+                            width: "40px",
+                            height: "40px",
+                            objectFit: "cover",
+                            border: "1px solid #dee2e6",
+                            borderRadius: "50%",
+                          }}
+                        />
                         <div>
-                          <p className="card-title fw-bold">
+                          <p
+                            className="mb-0"
+                            style={{ fontSize: "14px", fontWeight: "bold" }}
+                          >
                             {item.author_username || "Anonymous"}
                           </p>
-                          <p className="card-text">
-                            <span className="text-primary">Posted At </span>{" "}
-                            {new Date(item.date_posted).toLocaleDateString(
-                              "en-US",
-                              { year: "numeric", month: "long", day: "numeric" }
-                            ) || "July 17, 2004"}
+                          <p
+                            className="text-muted mb-0"
+                            style={{ fontSize: "12px" }}
+                          >
+                            Posted: {formatTime(item.date_posted)}
                           </p>
                         </div>
                       </div>
                     </div>
-                    {item.companies.length > 0 && (
-                      <div
-                        className="mb-2"
-                        style={{ borderBottom: "1px solid grey" }}
-                      >
-                        <div className="jaba">
-                          <div className="row">
-                            <div className="col-3 hnn">
-                              <img
-                                src={item.companies
-                                  .map((company) => company.picture)
-                                  .join(", ")}
-                                className="img-fluid mx-4 mt-1 mb-1 iamge1"
-                                alt={item.companies
-                                  .map((company) => company.name)
-                                  .join(", ")}
-                              />
-                            </div>
-                            <div className="col-8 mx-4 mt-2">
-                              <span style={{ fontSize: "small" }}>
+
+                    {/* Second Column - Company Info */}
+                    <div
+                      className="px-2 position-relative"
+                      style={{
+                        flexBasis: "40%",
+                        borderRight: "1px solid #dee2e6",
+                        margin: "0 20px 0 15px", // Added explicit left padding
+                      }}
+                    >
+                      {item.companies && item.companies.length > 0 && (
+                        <div className="row">
+                          <ThreadCompanyPic
+                            src={item.companies[0].picture}
+                            alt={item.companies[0].name}
+                          />
+                          <div className="col-12">
+                            {/* Company Names */}
+                            <span
+                              style={{
+                                fontSize: "medium",
+                                fontWeight: "bold",
+                                display: "block",
+                              }}
+                            >
+                              {" "}
+                              {/* Display block ensures proper spacing */}
+                              {item.companies
+                                .map((company) => company.name)
+                                .join(", ")}
+                            </span>
+                            <div>
+                              {/* Company Sectors */}
+                              <span
+                                style={{
+                                  fontSize: "medium",
+                                  display: "block",
+                                  marginTop: "5px",
+                                }}
+                              >
+                                {" "}
+                                {/* Adjust spacing */}
                                 {item.companies
-                                  .map((company) => company.name)
+                                  .map((company) => company.sector)
                                   .join(", ")}
                               </span>
-                              <div>
-                                <span style={{ fontSize: "small" }}>
-                                  {item.companies
-                                    .map((company) => company.sector)
-                                    .join(", ")}
-                                </span>
-                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    )}
+                      )}
+                    </div>
 
-                    <p className="card-text fw-bold">{item.title}</p>
-                    <p className="card-text">{item.caption}</p>
-
-                    <li className="list-group-item">
-                      <div className="d-flex flex-wrap">
-                        {item.tags &&
-                          item.tags.map((tag, idx) => (
-                            <button
-                              className="btn1 btn-primary text-white me-2 mb-2"
-                              key={idx}
-                            >
-                              {tag.name}
-                            </button>
-                          ))}
-                      </div>
-                    </li>
+                    {/* Third Column - Tags */}
                     <div
-                      className="container-flex d-flex align-items-center primary p-3 "
-                      style={{ gap: "10px" }}
+                      className="px-2"
+                      style={{
+                        flexBasis: "30%",
+                        display: "flex",
+                        flexWrap: "wrap",
+                        justifyContent: "flex-end",
+                      }}
                     >
-                      <div className="polls-container1">
-                        <div
-                          className="polls-text polll"
-                          onClick={() => toggleDropdown(index)}
+                      {item.tags &&
+                        item.tags.map((tag, idx) => (
+                          <span
+                            key={idx}
+                            className="badge me-2 mb-1"
+                            style={{
+                              fontSize: "12px",
+                              backgroundColor: "transparent",
+                              color: "black",
+                              border: "1px solid #dee2e6",
+                            }}
+                          >
+                            {tag.name}
+                          </span>
+                        ))}
+                    </div>
+                  </div>
+
+                  <hr
+                    style={{
+                      borderTop: "1px solid #adb5bd",
+                      margin: "0",
+                      width: "100%",
+                    }}
+                  />
+
+                  {/* Discussion Details */}
+                  <div className="d-flex justify-content-between align-items-center mb-3 mt-3">
+                    <div>
+                      <h5>{item.title}</h5>
+                      <p className="text-muted">{item.caption}</p>
+                    </div>
+                  </div>
+
+                  <hr
+                    style={{
+                      borderTop: "1px solid #adb5bd",
+                      margin: "0",
+                      width: "100%",
+                    }}
+                  />
+
+                  {/* Actions Section */}
+                  <div className="d-flex justify-content-between align-items-center mt-2">
+                    <div className="d-flex align-items-center">
+                      <div
+                        className="d-flex align-items-center ms-3"
+                        style={{ whiteSpace: "nowrap", gap: "5px" }}
+                      >
+                        <FaEye size={20} className="me-1" />
+                        <span
+                          className="text-muted"
+                          style={{ fontSize: "14px" }}
                         >
-                          <LiaComments size={20} />
-                          Comments
-                        </div>
+                          {item.view_count || 0} Views
+                        </span>
                       </div>
-                      <div className="polls-container1">
-                        <p
-                          className="polls-text1 pols"
-                          style={{ background: "#888888 !important" }}
-                        >
-                          <FaEye size={20} /> {item.view_count} Views
-                        </p>
-                      </div>
-                      <div className="d-flex flex-row">
+
+                      <button
+                        className="btn btn-link text-muted me-3" // Adds space between "Comments" and "Views"
+                        onClick={() => toggleDropdown(index)}
+                      >
+                        <LiaComments size={20} /> Comments
+                      </button>
+                    </div>
+
+                    <div className="d-flex align-items-center gap-2">
+                      <div className="d-inline-flex flex-row align-items-center">
                         <button
                           className="btn border-0"
                           onClick={() => upvoteQuestion(item.id, index)}
                         >
-                          <BiSolidUpArrow size={20} color="green" />
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#4A4A4A"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <polyline points="18 15 12 9 6 15"></polyline>
+                          </svg>
                         </button>
-                        <span className="mt-2">{item.votes} </span>
+                        <span>{item.votes}</span>
                         <button
                           className="btn border-0"
                           onClick={() => downvoteQuestion(item.id, index)}
                         >
-                          <BiSolidDownArrow size={20} color="red" />
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#4A4A4A"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                          </svg>
                         </button>
                       </div>
 
-                      <div className="polls-container pol">
-                        {token ? (
-                          <div
-                            className="polls-text bg-success"
-                            onClick={() => toggleDropdown1(index)}
-                          >
-                            Add Comment
-                          </div>
-                        ) : (
-                          <div
-                            className="polls-text bg-secondary"
-                            onClick={() =>
-                              alert("Please log in to add an Comment")
-                            }
-                          >
-                            Add Comment
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="height1">
-                      <div
-                        className={`polls-content ${
-                          pollStates[index] ? "open" : ""
-                        }`}
+                      <button
+                        className="btn btn-sm"
+                        style={{
+                          backgroundColor: "transparent",
+                          color: "gray", // Set text color to gray
+                          border: "1px solid gray", // Optional: Add a gray border for visibility
+                        }}
+                        onClick={() => toggleDropdown1(index)}
                       >
-                        <h3 className="text-center">
-                          <AnswersGiven questionId={item.id} />
-                        </h3>
-                      </div>
-                    </div>
-                    <div
-                      className={`polls-content ${
-                        pollStates1[index] ? "open" : ""
-                      }`}
-                    >
-                      {token ? (
-                        <h3 className="text-center">
-                          <GiveAnswer questionId={item.id} />
-                        </h3>
-                      ) : (
-                        <p>Please log in to add an Comment.</p>
-                      )}
+                        Comment
+                      </button>
                     </div>
                   </div>
-                  <hr />
+
+                  {/* Comments Section */}
+                  {pollStates[index] && <AnswersGiven questionId={item.id} />}
+
+                  {/* Add Comment Section */}
+                  {pollStates1[index] &&
+                    (token ? (
+                      <GiveAnswer questionId={item.id} />
+                    ) : (
+                      <p>Please log in to add a comment.</p>
+                    ))}
                 </div>
               </div>
-            ))}
-            {visibleCount < data.length && (
-              <div className="col-12 mt-3 pb-5">
-                <button
-                  className="btn btn-warning btn-block w-100"
-                  onClick={loadMoreQuestions}
-                >
-                  LOAD MORE QUESTIONS
-                </button>
-              </div>
-            )}
-          </div>
-        </>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

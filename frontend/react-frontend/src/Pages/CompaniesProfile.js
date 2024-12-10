@@ -480,9 +480,38 @@ const CompaniesProfile = () => {
                     </Tab>
                   </SortBy>
                 </FiltersContainer>
-                <AskQuestionButton onClick={handleButtonClick}>
+                <button
+                  className="btn"
+                  style={{
+                    width: "200px",
+                    height: "40px",
+                    backgroundColor: "#333333",
+                    color: "white",
+                    border: "1px solid #333333",
+                    borderRadius: "4px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontWeight: "500",
+                    letterSpacing: "1px",
+                    transition: "all 0.3s ease",
+                    cursor: "pointer",
+                    outline: "none",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = "white";
+                    e.target.style.color = "#333333";
+                    e.target.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = "#333333";
+                    e.target.style.color = "white";
+                    e.target.style.boxShadow = "none";
+                  }}
+                  onClick={handleButtonClick}
+                >
                   Start Discussion
-                </AskQuestionButton>
+                </button>
               </ButtonHolder>
               <CompanyComp
                 companyId={companyId}
