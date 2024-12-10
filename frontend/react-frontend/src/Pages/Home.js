@@ -117,6 +117,18 @@ const Home = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const fetchCompanyName = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/api/companies`);
+        setCompanyName(response.data);
+      } catch (error) {
+        console.error("Error fetching company names:", error);
+      }
+    };
+    fetchCompanyName();
+  }, []);
+
   const handleSearchChange = async (event) => {
     const query = event.target.value;
     setSearchQuery(query);
