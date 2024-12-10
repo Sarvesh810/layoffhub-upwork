@@ -20,14 +20,14 @@
   }
 
   .trending-discussions {
-    flex: 0 0 70%;
+    flex: 0 0 100%;
     padding-right: 20px;
   }
 
-  .companies-section {
+  /* .companies-section {
     flex: 0 0 30%;
     margin-left: auto;
-  }
+  } */
 }
 
 /* Additional responsive adjustments */
