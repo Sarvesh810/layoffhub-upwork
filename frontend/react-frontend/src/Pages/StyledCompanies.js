@@ -8,7 +8,7 @@ export const MainContainer1 = styled.div`
 `;
 
 export const ContantHolder = styled.div`
-  width: 90%;
+  width: 93%;
   gap: 20px;
   display: flex;
   flex-direction: column;
