@@ -504,7 +504,7 @@ class AnswerListCreateView(generics.ListCreateAPIView):
 
     def get_permissions(self):
         if self.request.method == 'POST':
-            return [IsAuthenticated()]
+            return [AllowAny()]
         return [AllowAny()]
 
     def get_queryset(self):
@@ -527,11 +527,20 @@ class AnswerListCreateView(generics.ListCreateAPIView):
             question_id = self.kwargs.get('question_id')
             question = Question.objects.get(id=question_id)
 
-        serializer.save(user=self.request.user, question=question, parent_answer=parent_answer)
+        if self.request.user.is_authenticated:
+            user = self.request.user if not serializer.validated_data.get('is_anonymous') else None
+        else:
+            user = None
+        randomUsername = serializer.validated_data.get('randomUsername')
+        serializer.save(user=user, question=question, parent_answer=parent_answer, randomUsername=randomUsername)
 
-        # Notify the original answer's author if it's an answer to an answer
         if parent_answer and parent_answer.user:
-            message = f"Your answer has a new response by {self.request.user.username}!"
+            message = "Your answer has a new response!"
+            
+            # Only add username if it's an authenticated, non-anonymous user
+            if self.request.user.is_authenticated and not serializer.validated_data.get('is_anonymous'):
+                message += f" by {self.request.user.username}"
+            
             Notification.objects.create(user=parent_answer.user, message=message)
 
 

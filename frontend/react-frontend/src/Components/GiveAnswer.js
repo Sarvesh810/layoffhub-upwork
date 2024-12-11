@@ -26,7 +26,9 @@ const GiveAnswer = ({ questionId }) => {
       content,
     };
     const config = {
-      "Content-Type": "application/json",
+      headers: {
+        "Content-Type": "application/json",
+      },
     };
 
     if (token) {

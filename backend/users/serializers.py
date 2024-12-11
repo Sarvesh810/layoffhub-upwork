@@ -309,7 +309,7 @@ class AnswerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Answer
-        fields = ['id', 'user', 'content', 'date_posted', 'is_anonymous', 'parent_answer', 'child_answers']
+        fields = ['id', 'user', 'content', 'date_posted', 'is_anonymous', 'parent_answer', 'child_answers', 'randomUsername']
         read_only_fields = ['user', 'date_posted', 'child_answers']
 
     def get_child_answers(self, obj):

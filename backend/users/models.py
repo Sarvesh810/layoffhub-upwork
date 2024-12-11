@@ -322,6 +322,7 @@ class Community(models.Model):
 class Answer(models.Model):
     question = models.ForeignKey(Question, related_name="answers", on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    randomUsername = models.CharField(max_length=255, null=True)
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     is_anonymous = models.BooleanField(default=False)
@@ -332,8 +333,13 @@ class Answer(models.Model):
         return f'Answer to {self.question}'
 
     def get_display_name(self):
-        if self.user:
-            return self.user.username
+        if self.is_anonymous:
+            return f'Anonymous Answer {self.id}'
+        
+        if (self.author):
+            return self.author.username
+        else:
+            return self.randomUsername
 
 
 class Poll(models.Model):
