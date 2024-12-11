@@ -12,18 +12,19 @@ export const MainContainer = styled.nav`
   }
 `;
 export const LogoContainer = styled.img`
-  width: 250px;
-  height: 80px;
+  width: 440px;
+  height: 150px;
   cursor: pointer;
   @media (max-width: 500px) {
-    width: 170px;
-    height: 50px;
+    width: 320px;
+    height: 110px;
   }
   @media (max-width: 350px) {
-    width: 150px;
-    height: 40px;
+    width: 270px;
+    height: 90px;
   }
 `;
+
 export const MenuContainer = styled.ul`
   display: flex;
   align-items: center;

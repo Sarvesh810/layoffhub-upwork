@@ -70,13 +70,9 @@ const CompanyComp = ({ companyId, activesort, showModal }) => {
   };
 
   const toggleDropdown1 = (index) => {
-    if (token) {
-      setPollStates1((prevStates) =>
-        prevStates.map((state, i) => (i === index ? !state : state))
-      );
-    } else {
-      alert("Please log in to add an Comment");
-    }
+    setPollStates1((prevStates) =>
+      prevStates.map((state, i) => (i === index ? !state : state))
+    );
   };
 
   const loadMoreQuestions = () => {
@@ -399,12 +395,7 @@ const CompanyComp = ({ companyId, activesort, showModal }) => {
                   {pollStates[index] && <AnswersGiven questionId={item.id} />}
 
                   {/* Add Comment Section */}
-                  {pollStates1[index] &&
-                    (token ? (
-                      <GiveAnswer questionId={item.id} />
-                    ) : (
-                      <p>Please log in to add a comment.</p>
-                    ))}
+                  {pollStates1[index] && <GiveAnswer questionId={item.id} />}
                 </div>
               </div>
             </div>
