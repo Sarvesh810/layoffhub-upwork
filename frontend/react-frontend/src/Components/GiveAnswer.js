@@ -11,6 +11,7 @@ const GiveAnswer = ({ questionId }) => {
   const [showError, setShowError] = useState(false);
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("access-token");
+  const randomUsername = localStorage.getItem("random-username");
 
   const postAnswer = async () => {
     if (!questionId) {
@@ -20,18 +21,20 @@ const GiveAnswer = ({ questionId }) => {
 
     setLoading(true);
     const url = `${API_BASE_URL}/api/answer_a_question/${questionId}/`;
-    const postData = {
+    const payload = {
       is_anonymous: isAnonymous,
       content,
     };
+    const config = {
+      "Content-Type": "application/json",
+    };
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
 
     try {
-      const response = await axios.post(url, postData, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.post(url, payload, config);
 
       console.log("API Response:", response.data);
 

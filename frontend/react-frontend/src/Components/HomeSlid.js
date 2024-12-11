@@ -16,6 +16,7 @@ const HomeSlid = () => {
   const [visibleCount, setVisibleCount] = useState(7);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("access-token");
+  const randomUsername = localStorage.getItem("random-username");
 
   const getQuestions = async () => {
     const url = `${API_BASE_URL}/api/asked_questions/`;
@@ -62,13 +63,9 @@ const HomeSlid = () => {
   };
 
   const toggleDropdown1 = (index) => {
-    if (token) {
-      setPollStates1((prevStates) =>
-        prevStates.map((state, i) => (i === index ? !state : state))
-      );
-    } else {
-      alert("Please log in to add a comment");
-    }
+    setPollStates1((prevStates) =>
+      prevStates.map((state, i) => (i === index ? !state : state))
+    );
   };
 
   const loadMoreQuestions = () => {
@@ -371,12 +368,7 @@ const HomeSlid = () => {
                   {pollStates[index] && <AnswersGiven questionId={item.id} />}
 
                   {/* Add Comment Section */}
-                  {pollStates1[index] &&
-                    (token ? (
-                      <GiveAnswer questionId={item.id} />
-                    ) : (
-                      <p>Please log in to add a comment.</p>
-                    ))}
+                  {pollStates1[index] && <GiveAnswer questionId={item.id} />}
                 </div>
               </div>
             </div>
