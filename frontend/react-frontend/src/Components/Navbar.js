@@ -23,13 +23,14 @@ import {
   AllNotification,
   Message,
 } from "./StyledNavbar";
-import { FaBell } from "react-icons/fa";
+import { FaBell, FaSearch } from "react-icons/fa";
 import img from "../Images/logo-nobackground-1000.png";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import axios from "axios";
 import { API_BASE_URL } from "../config";
+import "./Nav.css";
 
 const Navbar = () => {
   const [name, setName] = useState("");
@@ -45,6 +46,10 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [companies, setCompanies] = useState([]);
+  const [filteredCompanies, setFilteredCompanies] = useState([]);
+
   const navigate = useNavigate();
   const Home = () => {
     navigate("/");
@@ -73,6 +78,39 @@ const Navbar = () => {
   };
   const Signup = () => {
     navigate("/signup");
+  };
+
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/api/companies`);
+        setCompanies(response.data);
+      } catch (error) {
+        console.error("Error fetching companies:", error);
+      }
+    };
+    fetchCompanies();
+  }, []);
+
+  // Handle search input change
+  const handleSearchChange = (e) => {
+    const term = e.target.value;
+    setSearchTerm(term);
+
+    // Filter companies based on search term
+    const filtered = companies.filter((company) =>
+      company.name.toLowerCase().includes(term.toLowerCase())
+    );
+    setFilteredCompanies(filtered);
+  };
+
+  // Handle company selection
+  const handleCompanySelect = (companyName) => {
+    // Navigate to the specific company page
+    navigate(`/${companyName}`);
+    // Reset search
+    setSearchTerm("");
+    setFilteredCompanies([]);
   };
 
   const fetchNotifications = async () => {
@@ -189,7 +227,7 @@ const Navbar = () => {
 
   return (
     <>
-      <MainContainer>
+      <MainContainer className="navbar">
         <LogoContainer src={img} alt="Logo" onClick={Home}></LogoContainer>
         <MenuContainer showMenu={showMenu}>
           <MenuList>
@@ -261,6 +299,33 @@ const Navbar = () => {
               )}
             </Notification>
           </NotificationContrainer>
+
+          <div className="search-container">
+            <div className="search-wrapper">
+              <FaSearch className="search-icon" />
+              <input
+                type="text"
+                placeholder="Search companies..."
+                value={searchTerm}
+                onChange={handleSearchChange}
+                className="search-input"
+              />
+            </div>
+            {searchTerm && filteredCompanies.length > 0 && (
+              <div className="search-results">
+                {filteredCompanies.map((company) => (
+                  <div
+                    key={company.id}
+                    className="search-result-item"
+                    onClick={() => handleCompanySelect(company.name)}
+                  >
+                    {company.name}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
           {isLoggedIn ? (
             <UserMenu onClick={toggleDropdown}>
               {username}

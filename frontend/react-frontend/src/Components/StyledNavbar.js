@@ -12,16 +12,16 @@ export const MainContainer = styled.nav`
   }
 `;
 export const LogoContainer = styled.img`
-  width: 440px;
-  height: 150px;
+  width: 370px;
+  height: 120px;
   cursor: pointer;
   @media (max-width: 500px) {
     width: 320px;
     height: 110px;
   }
   @media (max-width: 350px) {
-    width: 270px;
-    height: 90px;
+    width: 240px;
+    height: 60px;
   }
 `;
 
