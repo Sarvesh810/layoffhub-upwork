@@ -204,6 +204,7 @@ const HomeSlid = () => {
                                 fontSize: "medium",
                                 fontWeight: "bold",
                                 display: "block",
+                                margin: "8px",
                               }}
                             >
                               {" "}
@@ -212,22 +213,6 @@ const HomeSlid = () => {
                                 .map((company) => company.name)
                                 .join(", ")}
                             </span>
-                            <div>
-                              {/* Company Sectors */}
-                              <span
-                                style={{
-                                  fontSize: "medium",
-                                  display: "block",
-                                  marginTop: "5px",
-                                }}
-                              >
-                                {" "}
-                                {/* Adjust spacing */}
-                                {item.companies
-                                  .map((company) => company.sector)
-                                  .join(", ")}
-                              </span>
-                            </div>
                           </div>
                         </div>
                       )}
@@ -286,31 +271,65 @@ const HomeSlid = () => {
                   />
 
                   {/* Actions Section */}
-                  <div className="d-flex justify-content-between align-items-center mt-2">
-                    <div className="d-flex align-items-center">
+                  <div
+                    className="mt-2"
+                    style={{
+                      display: "inline-flex", // Use inline-flex to keep all children in the same line
+                      justifyContent: "space-between", // Distribute space between child divs
+                      alignItems: "center", // Align items vertically
+                      width: "100%", // Ensure the container spans the full width
+                      whiteSpace: "nowrap", // Prevent wrapping of content
+                    }}
+                  >
+                    {/* Views and Comments Section */}
+                    <div
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        marginRight: "20px", // Space between this and the next section
+                      }}
+                    >
                       <div
-                        className="d-flex align-items-center ms-3"
-                        style={{ whiteSpace: "nowrap", gap: "5px" }}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          whiteSpace: "nowrap",
+                          gap: "5px",
+                        }}
                       >
-                        <FaEye size={20} className="me-1" />
-                        <span
-                          className="text-muted"
-                          style={{ fontSize: "14px" }}
-                        >
-                          {item.view_count || 0} Views
+                        <span className="views-icon">
+                          <FaEye size={16} className="me-1" />
                         </span>
+                        <span>{item.view_count || 0} Views</span>
                       </div>
 
                       <button
-                        className="btn btn-link text-muted me-3" // Adds space between "Comments" and "Views"
+                        className="btn btn-link text-muted d-flex align-items-center"
+                        style={{
+                          marginLeft: "10px",
+                        }}
                         onClick={() => toggleDropdown(index)}
                       >
-                        <LiaComments size={20} /> Comments
+                        <LiaComments size={16} />
+                        <span className="comments-text ms-1">Comments</span>
                       </button>
                     </div>
 
-                    <div className="d-flex align-items-center gap-2">
-                      <div className="d-inline-flex flex-row align-items-center">
+                    {/* Upvotes and Comment Button Section */}
+                    <div
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "10px", // Space between upvote/downvote and Comment button
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "5px", // Space between upvote and downvote
+                        }}
+                      >
                         <button
                           className="btn border-0"
                           onClick={() => upvoteQuestion(item.id, index)}

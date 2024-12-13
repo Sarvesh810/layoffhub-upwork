@@ -143,11 +143,10 @@
 
   .btn-2 {
     width: 100%;
-    
   }
 }
 
-.btn-block{
+.btn-block {
   background-color: rgb(255, 123, 0);
   border: none;
   border-radius: 5px;
@@ -177,60 +176,58 @@
   position: relative;
   z-index: 1; /* Ensure the cards are behind the dropdown */
   margin-bottom: 20px;
-
 }
 
 /* Polls container */
 .polls-container {
   display: flex;
-  justify-content: start!important;
+  justify-content: start !important;
   align-items: center !important;
 }
 
 /* Button and other elements adjustments */
 .polls-text1 {
-  cursor:default ;
+  cursor: default;
   background-color: rgba(160, 160, 160, 0.712);
   border-radius: 5px;
   text-align: center;
-  width: 5vw ;
+  width: 5vw;
   font-weight: bold;
 }
 .polls-text {
-  cursor: pointer ;
-  width: 10vw ;
+  cursor: pointer;
+  width: 10vw;
   font-weight: bold;
 }
 .polls-text1 {
-   cursor:default !important;
+  cursor: default !important;
   background-color: rgba(160, 160, 160, 0.712);
-  width: 10vw ;
+  width: 10vw;
   font-weight: bold;
 }
 @media (max-width: 500px) {
   .polls-text1 {
-   cursor:default !important ;
-  background-color: rgba(160, 160, 160, 0.712);
-  width: 10vw ;
-  font-weight: bold;
-  font-size: 0.7em;
-  
-}
-.polls-container {
-  display: flex;
-  gap: 10px !important;
-}
+    cursor: default !important ;
+    background-color: rgba(160, 160, 160, 0.712);
+    width: 10vw;
+    font-weight: bold;
+    font-size: 0.7em;
+  }
+  .polls-container {
+    display: flex;
+    gap: 10px !important;
+  }
 }
 
 .conma .polls-container.pols.polll {
   display: flex !important;
-  justify-content:flex-start !important;
+  justify-content: flex-start !important;
   align-items: center !important;
 }
 .pol {
   text-align: center !important;
-  cursor: pointer ;
-  width: 10vw ;
+  cursor: pointer;
+  width: 10vw;
   font-weight: bold;
 }
 .conma .polls-container.pol {
@@ -292,15 +289,14 @@
 }
 /* HomeSlid.css */
 
-
-
 @media (max-width: 500px) {
   .conma {
     flex-direction: column; /* Stack the items in a column on small screens */
     align-items: stretch; /* Ensure buttons take full width */
   }
 
-  .polls-container, .d-flex.flex-row {
+  .polls-container,
+  .d-flex.flex-row {
     width: 100%; /* Make each container take the full width */
     text-align: center; /* Center the text */
     margin-bottom: 10px; /* Add some space between the buttons */
@@ -314,25 +310,25 @@
     width: 100%; /* Ensure the text inside takes full width */
   }
 
-   .polls-text1 {
+  .polls-text1 {
     width: 100%; /* Ensure the text inside takes full width */
   }
   .btn {
     width: 100%; /* Ensure buttons take full width */
   }
 }
-.iamge1{
-height: 50px !important;
-width: 50px !important;
-display: flex;
-background-color: white;
-border: 1px solid black;
- border-radius: 20%;
+.iamge1 {
+  height: 50px !important;
+  width: 50px !important;
+  display: flex;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 20%;
 }
 
 /* Responsive Adjustments for Small Screens */
 @media (max-width: 768px) {
-  .iamge1{
+  .iamge1 {
     height: 10vh;
     border: 1px solid green;
     border-radius: 20px;
@@ -354,12 +350,15 @@ border: 1px solid black;
   }
 
   /* Optimize header section for small screens */
-  .card-body > .d-flex.justify-content-between.align-items-center.mb-3.mt-3.position-relative {
+  .card-body
+    > .d-flex.justify-content-between.align-items-center.mb-3.mt-3.position-relative {
     flex-direction: column;
     align-items: flex-start !important;
   }
 
-  .card-body > .d-flex.justify-content-between.align-items-center.mb-3.mt-3.position-relative > div {
+  .card-body
+    > .d-flex.justify-content-between.align-items-center.mb-3.mt-3.position-relative
+    > div {
     width: 100%;
     border-right: none !important;
     margin: 5px 0 !important;
@@ -443,5 +442,17 @@ border: 1px solid black;
   svg {
     width: 16px;
     height: 16px;
+  }
+}
+
+.views-icon {
+  margin-right: "10px";
+  display: "inline-block";
+}
+
+@media (max-width: 768px) {
+  .comments-text,
+  .views-icon {
+    display: none;
   }
 }

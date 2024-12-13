@@ -1,7 +1,102 @@
+/* Navbar container styling */
 .navbar {
-    
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(5px);
--webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 10px 20px;
+}
 
+/* Default styling for search container */
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Search wrapper */
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  padding: 5px 10px;
+  width: 300px; /* Default width for larger screens */
+}
+
+.search-icon {
+  margin-right: 10px;
+  color: #666;
+}
+
+.search-input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  outline: none;
+}
+
+/* Search results dropdown */
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-top: none;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 9999; /* Set a high value to ensure it appears above other elements */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.search-result-item {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.search-result-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the start */
+  }
+
+  .search-container {
+    width: 100%; /* Full width for smaller screens */
+    margin-top: 10px; /* Add spacing for better visual separation */
+    justify-content: center; /* Center align search bar */
+  }
+
+  .search-wrapper {
+    width: 90%; /* Adjust width to fit smaller screens */
+    margin: 0 auto; /* Center the search bar */
+  }
+
+  .search-results {
+    width: 90%; /* Ensure search results match the search bar width */
+    margin: 0 auto;
+  }
+}
+
+/* Optional: Add some spacing and padding for better layout */
+.menu-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; /* Allow menu items to wrap on smaller screens */
+}
+
+.menu-list {
+  margin: 10px;
 }
