@@ -202,13 +202,12 @@ const Home = () => {
                     Start Discussion
                   </button>
                 </div>
-
-                <div className="olll">
-                  <ContantHolder>
-                    <HomeSlid />
-                  </ContantHolder>
-                </div>
               </div>
+            </div>
+            <div className="olll">
+              <ContantHolder>
+                <HomeSlid />
+              </ContantHolder>
             </div>
           </div>
         </div>
