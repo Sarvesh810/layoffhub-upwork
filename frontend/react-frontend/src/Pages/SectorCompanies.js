@@ -172,9 +172,6 @@ const Sector = () => {
                       <CompnaySector>{company.sector}</CompnaySector>
                     </NameHolder>
                   </CompanyData>
-                  <ThreadsComtainer>
-                    <Threds>Total Threads: {company.threads}</Threds>
-                  </ThreadsComtainer>
 
                   <DetailButton onClick={() => navigate(`/${company.name}`)}>
                     View Company

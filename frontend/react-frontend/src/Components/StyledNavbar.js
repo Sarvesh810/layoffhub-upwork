@@ -308,10 +308,6 @@ export const DropdownItem = styled.div`
 
 export const NotificationContrainer = styled.div`
   display: flex;
-  gap: 15px;
-  @media (max-width: 1000px) {
-    width: 80% !important;
-  }
 `;
 export const Notification = styled.div`
   position: absolute;
