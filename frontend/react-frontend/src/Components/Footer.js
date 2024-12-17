@@ -54,7 +54,7 @@ const Footer = () => {
                 <Link to={"/company"} className="m-1  text1">
                   Companies
                 </Link>
-              
+
                 <Link to={"/analytics"} className="m-1 mx-4 text1">
                   Analytics
                 </Link>
